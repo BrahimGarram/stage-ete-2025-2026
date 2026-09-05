@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Effet ripple des cartes de statistiques (élément créé dynamiquement) */
+.kpi-card .ripple{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,0.45);
+  transform:scale(0);
+  animation:erap-ripple .65s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes erap-ripple{
+  to{ transform:scale(1); opacity:0; }
+}
+

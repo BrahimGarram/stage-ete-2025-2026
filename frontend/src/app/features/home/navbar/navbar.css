@@ -1,0 +1,214 @@
+/* =========================
+   GLOBAL NAVBAR STYLE
+   ========================= */
+
+:host {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.site-header {
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+}
+
+/* =========================
+   TOP BAR
+   ========================= */
+.topbar {
+  background: rgba(10, 14, 20, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12.5px;
+}
+
+.topbar__inner {
+  max-width: 1240px;
+  margin: auto;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar__contact {
+  display: flex;
+  gap: 28px;
+  color: #b0b5c0;
+}
+
+.topbar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar__icon {
+  color: #f5a623;
+  flex-shrink: 0;
+}
+
+.topbar__social {
+  display: flex;
+  gap: 8px;
+}
+
+.topbar__social a {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f5a623;
+  color: #12151c;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.topbar__social a:hover {
+  transform: translateY(-2px);
+  background: #ffc040;
+  box-shadow: 0 6px 16px rgba(245, 166, 35, 0.45);
+}
+
+/* =========================
+   MAIN NAVBAR
+   ========================= */
+.navbar {
+  background: rgba(15, 19, 26, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.navbar__inner {
+  max-width: 1240px;
+  margin: auto;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+/* LOGO */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand__mark {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #ffc040 0%, #f5a623 100%);
+  color: #12151c;
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgba(245, 166, 35, 0.4);
+}
+
+.brand__name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+/* MENU */
+.nav__list {
+  display: flex;
+  gap: 34px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__link {
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav__link:hover,
+.nav__link--active {
+  color: #f5a623;
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #f5a623, #ffc040);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav__link:hover::after,
+.nav__link--active::after {
+  width: 100%;
+}
+
+.navbar__search {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.navbar__search:hover {
+  background: #f5a623;
+  border-color: #f5a623;
+  color: #12151c;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 1024px) {
+  .nav__list {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav__list,
+  .navbar__search {
+    display: none;
+  }
+
+  .topbar__contact {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+}

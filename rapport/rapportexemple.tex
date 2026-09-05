@@ -1,0 +1,1253 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage{forloop}
+\usepackage{changepage}
+\usepackage{etoolbox}
+\usepackage{setspace}
+\usepackage{tikz}
+
+% Page setup
+\geometry{margin=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% Code listing setup
+\lstset{
+    language=JavaScript,
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=tb,
+    tabsize=2,
+    columns=fixed,
+    showstringspaces=false,
+    showtabs=false,
+    keepspaces,
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    morekeywords={const, let, var, function, if, else, for, while, return, import, export, require, module, exports}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{SPIRAW - Full-Stack Web Development Internship}
+\fancyhead[R]{Shot Shop Website Project}
+\fancyfoot[C]{\thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \thispagestyle{empty}
+    
+    % Header with ESPRIT branding
+    \begin{center}
+        \vspace*{2cm}
+        
+        % ESPRIT Logo and name
+        \includegraphics[width=3cm]{esprit-logo.png}\\[0.5cm]
+        
+        
+        {\large\textcolor{black}{ÉCOLE SUPÉRIEURE PRIVÉE D'INGÉNIERIE ET DE TECHNOLOGIES}\par}
+        \vspace{0.4cm}
+        
+        {\large\textcolor{black}{HONORIS UNITED UNIVERSITIES}\par}
+        
+                 \vspace{2cm}
+         
+         % Main title without box
+         {\Huge\bfseries RAPPORT DE STAGE D'IMMERSION\\[0.3cm] EN ENTREPRISE\par}
+         
+         \vspace{2cm}
+         
+         % Project details in a compact format
+         \begin{minipage}{0.9\textwidth}
+             \begin{center}
+                 \large
+                 \textbf{Titre du projet :} Développement d'une plateforme e-commerce moderne\\[0.2cm]
+                 \textbf{« Shot Shop Website Project »}\\[0.3cm]
+                 
+                 \begin{tabular}{ll}
+                     \textbf{Élaboré par :} & Mohamed Brahim Garram \\[0.2cm]
+                     \textbf{Période de stage :} & 02/07/2026 Au 02/09/2026 \\[0.2cm]
+                     \textbf{Effectué à :} & Etap \\[0.2cm]
+                     \textbf{Encadré par :} & Hafedh Dargham (encadrant de stage)
+                 \end{tabular}
+                 
+                 \vspace{0.3cm}
+                 
+                 \textbf{Année académique 2025-2026}
+             \end{center}
+         \end{minipage}
+    \end{center}
+    
+\end{titlepage}
+
+% Acknowledgments
+\begin{center}
+\vspace*{3cm}
+
+{\Huge\bfseries Remerciements\par}
+
+\vspace{2cm}
+
+\begin{minipage}{0.8\textwidth}
+Je tiens à exprimer ma profonde gratitude à toute l'équipe de SPIRAW pour m'avoir accueilli et accompagné tout au long de ce stage enrichissant. 
+
+\vspace{1cm}
+
+Mes remerciements particuliers vont à :
+\begin{itemize}
+    \item \textbf{Insaf AYARI}, CEO et encadrant de stage de la startup SPIRAW, pour m'avoir donné cette opportunité unique, pour sa confiance et son accompagnement précieux tout au long de ce stage
+    \item \textbf{Sarah} et \textbf{Amine}, avec qui j'ai eu le plaisir de travailler dans l'équipe de développement, pour leur collaboration, leur partage d'expertise et l'ambiance de travail conviviale
+    \item L'ensemble de l'équipe de développement de SPIRAW pour leur accueil chaleureux et leur esprit d'équipe
+    \item Mes amis qui m'ont soutenu et encouragé tout au long de cette expérience
+    \item Ma famille pour leur soutien inconditionnel et leur compréhension pendant cette période de stage
+\end{itemize}
+
+\vspace{1cm}
+
+Ce stage m'a permis de mettre en pratique mes connaissances théoriques et de développer de nouvelles compétences dans le domaine du développement web full-stack, tout en découvrant un environnement de travail innovant et stimulant.
+\end{minipage}
+\end{center}
+
+\newpage
+
+% Abstract
+\begin{center}
+\vspace*{3cm}
+
+{\Huge\bfseries Résumé\par}
+
+\vspace{2cm}
+
+\begin{minipage}{0.8\textwidth}
+Ce rapport présente le travail réalisé lors de mon stage de développement web full-stack au sein de SPIRAW, portant sur la conception et le développement d'une plateforme e-commerce moderne pour la marque Shot Shop. Le projet a consisté à développer une application web complète utilisant les technologies React et Node.js, avec une architecture microservices et une base de données MongoDB. L'objectif principal était de créer une plateforme performante, sécurisée et offrant une expérience utilisateur optimale. Le développement a été réalisé en suivant les méthodologies agiles et les bonnes pratiques de développement moderne.
+
+\vspace{1cm}
+
+\textbf{Mots-clés :} Développement web, Full-stack, React, Node.js, MongoDB, E-commerce, Architecture microservices
+\end{minipage}
+\end{center}
+
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Introduction
+\section{Introduction}
+L'évolution rapide des technologies web et l'importance croissante du commerce électronique ont créé un besoin constant d'innovation dans le développement d'applications web modernes. Dans ce contexte, mon stage au sein de SPIRAW m'a permis de participer au développement d'une plateforme e-commerce complète pour la marque Shot Shop.
+
+Ce projet représente une opportunité unique d'appliquer les concepts théoriques appris lors de ma formation dans un environnement professionnel réel, tout en découvrant les défis et les exigences du développement web en entreprise.
+
+L'objectif de ce rapport est de présenter de manière détaillée le travail réalisé, les technologies utilisées, les défis rencontrés et les solutions apportées, ainsi que les perspectives d'évolution du projet.
+
+% Context and Project Importance
+\section{Contexte et Importance du Projet}
+
+\subsection{Contexte du Projet}
+Le projet Shot Shop s'inscrit dans une stratégie de digitalisation de la marque, visant à étendre sa présence en ligne et à améliorer l'expérience client. La plateforme doit permettre aux utilisateurs de découvrir, consulter et acheter les produits de la marque de manière intuitive et sécurisée.
+
+\subsection{Importance Stratégique}
+\begin{itemize}
+    \item \textbf{Expansion numérique :} Transition vers un modèle de vente en ligne
+    \item \textbf{Expérience client :} Amélioration de l'engagement et de la satisfaction client
+    \textbf{Analyse des données :} Collecte et analyse des comportements d'achat
+    \item \textbf{Compétitivité :} Positionnement sur le marché e-commerce en croissance
+\end{itemize}
+
+% Company Presentation
+\section{Présentation de l'Entreprise}
+
+\subsection{SPIRAW : Vue d'ensemble}
+SPIRAW est une startup foodtech pionnière dédiée à révolutionner et démocratiser la microalgue comme alternative alimentaire durable. Dans un monde où la demande de sources alimentaires durables et nutritives croît de manière exponentielle, SPIRAW émerge comme une startup innovante qui change notre façon de penser l'alimentation.
+
+\subsection{Mission et Vision}
+\begin{itemize}
+    \item \textbf{Mission :} Révolutionner et démocratiser la microalgue comme alternative alimentaire durable
+    \item \textbf{Vision :} Créer un chemin vers l'innovation durable dans l'industrie alimentaire
+    \item \textbf{Approche :} Développement de solutions alimentaires innovantes et respectueuses de l'environnement
+\end{itemize}
+
+\subsection{Partenaires Stratégiques}
+SPIRAW bénéficie d'un accompagnement stratégique de premier plan :
+\begin{itemize}
+    \item \textbf{ACTIA ENGINEERING SERVICES} : Partenaire technologique majeur
+    \item \textbf{ACTINCUBE} : Incubateur de technologies qui accompagne SPIRAW dans son développement
+\end{itemize}
+
+% Logos des partenaires
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{actia-logo.png}
+\caption{Logo ACTIA}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{spiraw-logo.png}
+\caption{Logo SPIRAW}
+\end{minipage}
+\end{figure}
+
+\subsection{Expertise et Domaines d'Activité}
+\begin{itemize}
+    \item Développement de solutions alimentaires innovantes basées sur la microalgue
+    \item Recherche et développement en biotechnologie alimentaire
+    \item Solutions durables pour l'industrie agroalimentaire
+    \item Innovation technologique dans le domaine de la nutrition
+\end{itemize}
+
+\subsection{Équipe et Organisation}
+L'équipe de SPIRAW est composée de professionnels passionnés par l'innovation alimentaire et le développement durable. L'approche collaborative et l'écosystème d'incubation d'ACTINCUBE ont facilité l'intégration et l'apprentissage lors du stage, offrant un environnement propice à l'innovation et au développement de nouvelles compétences.
+
+% Project Objectives
+\section{Objectifs du Projet}
+
+\subsection{Objectifs Principaux}
+\begin{enumerate}
+    \item \textbf{Développement d'une plateforme e-commerce complète} : Création d'une application web moderne et performante
+    \item \textbf{Architecture robuste et scalable} : Mise en place d'une architecture microservices évolutive
+    \item \textbf{Sécurité et performance} : Implémentation de mesures de sécurité et d'optimisations de performance
+    \item \textbf{Expérience utilisateur optimale} : Interface intuitive et responsive pour tous les appareils
+\end{enumerate}
+
+\subsection{Objectifs Secondaires}
+\begin{itemize}
+    \item Intégration de systèmes de paiement sécurisés
+    \item Mise en place d'un système de gestion des utilisateurs
+    \item Implémentation de fonctionnalités de suivi et d'analyse
+    \item Optimisation SEO et accessibilité
+\end{itemize}
+
+% Project Description
+\section{Description du Projet}
+
+\subsection{Conception et Planification}
+
+\subsubsection{Méthodologie Scrum}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{scrum.png}
+  \caption{Méthodologie Scrum appliquée au projet Shot Shop}
+  \label{fig:scrum-methodology}
+\end{figure}
+
+
+Le projet Shot Shop a été développé en utilisant la méthodologie Scrum, une approche agile qui a permis une gestion efficace du projet et une collaboration optimale au sein de l'équipe de développement. Cette méthodologie a été choisie pour sa flexibilité et sa capacité à s'adapter aux changements de besoins tout au long du développement.
+
+\paragraph{Structure des Sprints}
+L'équipe a adopté un cycle de développement basé sur des sprints d'une semaine, permettant une livraison continue de fonctionnalités et une adaptation rapide aux retours utilisateurs :
+
+\begin{itemize}
+    \item \textbf{Sprint 1 (Semaine 1) :} Initialisation du projet, constitution de l'équipe et mise en place de l'environnement de développement
+    \item \textbf{Sprint 2 (Semaine 2) :} Analyse des besoins, conception de l'architecture et création des maquettes
+    \item \textbf{Sprint 3 (Semaine 3) :} Développement du backend et mise en place de la base de données
+    \item \textbf{Sprint 4 (Semaine 4) :} Développement du frontend et intégration des composants de base
+    \item \textbf{Sprint 5 (Semaine 5) :} Implémentation des fonctionnalités e-commerce, système d'authentification et intégration des services externes (Azure Translator, GA4)
+    \item \textbf{Sprint 6 (Semaine 6) :} Optimisation des performances, tests utilisateurs et déploiement final
+\end{itemize}
+
+\paragraph{Cérémonies Scrum}
+L'équipe a respecté rigoureusement les cérémonies Scrum essentielles pour maintenir un rythme de développement efficace, comme illustré dans la Figure~\ref{fig:scrum-methodology} qui montre le flux des événements Scrum :
+
+\begin{itemize}
+    \item \textbf{Sprint Planning (2h) :} Session de planification au début de chaque sprint pour sélectionner les user stories du Product Backlog et les décomposer en tâches techniques, visible dans le diagramme comme point de départ du cycle Sprint
+    \item \textbf{Daily Scrum (15 min) :} Réunion quotidienne pour synchroniser l'équipe sur les avancements, les blocages et la planification du jour, représentée au centre du cycle Sprint dans le diagramme
+    \item \textbf{Sprint Review (1h) :} Révision et validation des fonctionnalités développées par Insaf AYARI (CEO) pour s'assurer de l'alignement avec la vision produit, illustrée par le rôle "Product Owner" dans le diagramme et intégrée dans le processus de validation
+    \item \textbf{Sprint Retrospective (1h) :} Analyse des bonnes pratiques, identification des axes d'amélioration et ajustement des processus pour les prochains sprints, visible dans le cycle de fin de sprint du diagramme
+\end{itemize}
+
+\paragraph{Artefacts Scrum}
+La gestion du projet a été structurée autour des artefacts Scrum essentiels, tous visibles dans la Figure~\ref{fig:scrum-methodology} qui détaille leur rôle dans le processus :
+
+\begin{itemize}
+    \item \textbf{Product Backlog :} Liste priorisée des fonctionnalités à développer, constamment mise à jour, représentée dans le diagramme comme point de départ du processus avec les "USER STORIES"
+    \item \textbf{Sprint Backlog :} Ensemble des tâches sélectionnées pour le sprint en cours, illustré dans le diagramme comme intermédiaire entre la planification et l'exécution
+    \item \textbf{Definition of Done :} Critères clairs définissant quand une fonctionnalité est considérée comme terminée, visible dans le diagramme comme point de validation avant la livraison
+\end{itemize}
+
+\paragraph{Rôles et Responsabilités}
+L'équipe Scrum était composée de membres aux rôles bien définis, comme illustré dans la Figure~\ref{fig:scrum-methodology} qui montre la répartition des responsabilités :
+
+\begin{itemize}
+    \item \textbf{Product Owner :} Insaf AYARI (CEO) - Définition des priorités et validation des fonctionnalités, rôle central visible dans le diagramme pour la gestion du Product Backlog
+    \item \textbf{Scrum Master :} Amine HAMEMI - Facilitation des cérémonies et résolution des blocages, rôle de facilitation représenté dans le diagramme pour assurer le bon déroulement du processus
+    \item \textbf{Development Team :} Farah SEHLI et moi-même - Développement des fonctionnalités, équipe de développement active dans le cycle Sprint du diagramme
+\end{itemize}
+
+\paragraph{Outils de Gestion Scrum}
+Pour faciliter la gestion Scrum, l'équipe a utilisé plusieurs outils essentiels :
+
+\begin{itemize}
+    \item \textbf{Discord :} Communication quotidienne en temps réel, partage d'informations importantes et résolution rapide des problèmes techniques
+    \item \textbf{Jira :} Gestion complète des projets avec suivi des user stories, tâches par sprint, et génération de rapports d'avancement
+    \item \textbf{GitHub :} Gestion du code source, suivi des issues et pull requests avec intégration des branches par sprint, et collaboration sur le développement
+\end{itemize}
+
+\paragraph{Avantages de Scrum dans notre Projet}
+L'utilisation de Scrum a apporté de nombreux bénéfices au projet Shot Shop :
+
+\begin{itemize}
+    \item \textbf{Flexibilité :} Adaptation rapide aux changements de besoins et aux retours utilisateurs
+    \item \textbf{Transparence :} Visibilité claire sur l'avancement et les blocages du projet
+    \item \textbf{Qualité :} Livraison continue permettant une détection précoce des problèmes
+    \item \textbf{Collaboration :} Communication régulière et travail d'équipe efficace
+    \item \textbf{Apprentissage :} Rétrospectives permettant l'amélioration continue des processus
+\end{itemize}
+
+\subsubsection{Phase de Conception}
+La phase de conception a duré trois semaines, incluant :
+\begin{itemize}
+    \item Analyse des besoins et des exigences fonctionnelles
+    \item Conception de l'architecture technique
+    \item Création des maquettes et prototypes
+    \item Planification des tâches et estimation des délais
+\end{itemize}
+
+\subsection{Choix Technologiques}
+
+\subsubsection{Frontend}
+\begin{itemize}
+    \item \textbf{React 18} : Framework moderne pour la création d'interfaces utilisateur interactives
+    \item \textbf{TypeScript} : Langage typé pour un développement plus robuste et maintenable
+    \item \textbf{Tailwind CSS} : Framework CSS utilitaire pour un design responsive et moderne
+    \item \textbf{Vite} : Outil de build rapide et moderne pour le développement
+\end{itemize}
+
+\subsubsection{Backend}
+\begin{itemize}
+    \item \textbf{Node.js} : Runtime JavaScript côté serveur pour une stack JavaScript unifiée
+    \item \textbf{Express.js} : Framework web minimaliste et flexible
+    \item \textbf{MongoDB} : Base de données NoSQL orientée documents
+    \item \textbf{Mongoose} : ODM (Object Document Mapper) pour MongoDB
+\end{itemize}
+
+\subsubsection{Base de Données}
+\begin{itemize}
+    \item \textbf{MongoDB} : Base de données NoSQL offrant flexibilité et scalabilité
+    \item \textbf{Schémas Mongoose} : Validation et structure des données
+    \item \textbf{Indexation optimisée} : Performance des requêtes
+\end{itemize}
+
+\subsection{Outils et Frameworks}
+Le développement du projet Shot Shop a nécessité l'utilisation d'un ensemble d'outils et de frameworks modernes pour assurer la qualité, la collaboration et l'efficacité du développement :
+
+\begin{itemize}
+    \item \textbf{Versioning :} Git avec GitHub pour la gestion des versions et la collaboration en équipe
+    \item \textbf{Gestion des dépendances :} npm et package.json pour la gestion des packages et des scripts
+    \item \textbf{Linting :} ESLint pour la qualité du code et le respect des standards de codage
+    \item \textbf{Formatage :} Prettier pour la cohérence du style et l'auto-formatage du code
+    \item \textbf{Testing :} Jest pour les tests unitaires et l'assurance qualité
+    \item \textbf{API Testing :} Postman pour tester et documenter les API REST
+    \item \textbf{IDE :} Visual Studio Code pour le développement et le débogage
+    \item \textbf{Traduction :} Azure Translator pour l'internationalisation automatique
+    \item \textbf{Analytics :} Google Analytics 4 (GA4) pour le suivi des performances et comportements utilisateurs
+\end{itemize}
+
+% Images des outils de développement
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{git-logo.png}
+\caption{Git \& GitHub}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{postman-logo.png}
+\caption{Postman}
+\end{minipage}
+\hfill
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{vscode-logo.png}
+\caption{Visual Studio Code}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{npm-logo.png}
+\caption{npm}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{eslint-logo.png}
+\caption{ESLint}
+\end{minipage}
+\end{figure}
+
+\subsection{Architecture}
+L'architecture du projet suit le modèle MVC (Model-View-Controller) avec une séparation claire des responsabilités :
+
+\begin{itemize}
+    \item \textbf{Présentation (Frontend) :} Composants React organisés en pages et composants réutilisables
+    \item \textbf{Logique métier (Backend) :} Contrôleurs, services et modèles de données
+    \item \textbf{Données :} Base de données MongoDB avec schémas Mongoose
+    \item \textbf{API REST :} Interface de communication entre frontend et backend
+    \item \textbf{Services externes :} Intégration Azure Translator et Google Analytics 4
+    \item \textbf{État global :} Gestion centralisée avec Zustand et React Query
+    \item \textbf{Middleware :} Authentification JWT, validation des données, gestion des erreurs
+\end{itemize}
+
+\subsection{Intégration des Services Externes}
+
+\subsubsection{Azure Translator et Internationalisation}
+L'une des fonctionnalités innovantes du projet Shot Shop est l'intégration d'Azure Translator pour offrir une expérience multilingue en temps réel. Cette intégration permet aux utilisateurs d'accéder au contenu dans leur langue préférée, améliorant ainsi l'accessibilité et l'expérience utilisateur.
+
+\begin{itemize}
+    \item \textbf{Traduction automatique :} Traduction en temps réel du contenu du site
+    \item \textbf{Support multilingue :} Interface disponible en français, anglais, arabe et espagnol
+    \item \textbf{API Cognitive Services :} Utilisation des services Azure pour la qualité de traduction
+    \item \textbf{Performance optimisée :} Mise en cache des traductions pour améliorer les temps de réponse
+\end{itemize}
+
+\begin{lstlisting}[caption=Configuration Azure Translator]
+// Configuration du service de traduction
+const translatorConfig = {
+  endpoint: 'https://api.cognitive.microsofttranslator.com',
+  region: 'westeurope',
+  key: process.env.AZURE_TRANSLATOR_KEY
+};
+
+// Service de traduction
+const translateText = async (text, targetLanguage) => {
+  try {
+    const response = await fetch(
+      `${translatorConfig.endpoint}/translate?api-version=3.0&to=${targetLanguage}`,
+      {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': translatorConfig.key,
+          'Ocp-Apim-Subscription-Region': translatorConfig.region,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify([{ text }])
+      }
+    );
+    
+    const result = await response.json();
+    return result[0].translations[0].text;
+  } catch (error) {
+    console.error('Erreur de traduction:', error);
+    return text; // Retour du texte original en cas d'erreur
+  }
+};
+\end{lstlisting}
+
+\subsubsection{Google Analytics 4 (GA4)}
+L'intégration de Google Analytics 4 permet un suivi complet des performances du site et des comportements utilisateurs, offrant des insights précieux pour l'optimisation continue.
+
+\begin{itemize}
+    \item \textbf{Suivi des événements :} Navigation, interactions avec les produits, processus d'achat
+    \item \textbf{Analyse des conversions :} Taux de conversion, paniers abandonnés, parcours utilisateur
+    \item \textbf{Performance du site :} Temps de chargement, Core Web Vitals, métriques de performance
+    \item \textbf{Segmentation des utilisateurs :} Comportements par pays, appareil, source de trafic
+\end{itemize}
+
+\begin{lstlisting}[caption=Configuration GA4]
+// Configuration Google Analytics 4
+const GA4_CONFIG = {
+  measurementId: 'G-XXXXXXXXXX',
+  debugMode: process.env.NODE_ENV === 'development'
+};
+
+// Hook personnalisé pour GA4
+const useAnalytics = () => {
+  const trackEvent = useCallback((eventName, parameters = {}) => {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', eventName, {
+        event_category: 'user_interaction',
+        event_label: 'shot_shop',
+        ...parameters
+      });
+    }
+  }, []);
+
+  const trackPageView = useCallback((pageTitle, pageLocation) => {
+    if (typeof gtag !== 'undefined') {
+      gtag('config', GA4_CONFIG.measurementId, {
+        page_title: pageTitle,
+        page_location: pageLocation
+      });
+    }
+  }, []);
+
+  return { trackEvent, trackPageView };
+};
+\end{lstlisting}
+
+% Diagrams
+\section{Diagrammes}
+
+\subsection{Diagramme de Cas d'Utilisation}
+Le diagramme de cas d'utilisation suivant illustre les interactions entre les différents acteurs et les fonctionnalités du système e-commerce Shot Shop :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{use-case-diagram.png}
+    \caption{Diagramme de cas d'utilisation UML du système Shot Shop}
+    \label{fig:use-case-diagram}
+\end{figure}
+
+Ce diagramme présente une architecture complète des cas d'utilisation du système avec trois acteurs principaux :
+
+\begin{itemize}
+    \item \textbf{Administrator :} Accès au panneau d'administration avec gestion du catalogue produits, comptes utilisateurs, traitement des commandes, analyse des ventes, gestion des stocks, configuration du site, gestion des demandes clients et abonnements newsletter
+    
+    \item \textbf{Guest :} Fonctionnalités de base incluant recherche et filtrage de produits, consultation des détails produits, ajout temporaire au panier, inscription et connexion, consultation des informations de contact et abonnement à la newsletter
+    
+    \item \textbf{Authenticated User :} Hérite des fonctionnalités Guest et accède à des fonctionnalités avancées : gestion du profil et déconnexion, gestion des listes de souhaits, gestion complète du panier d'achat (ajout/suppression/mise à jour des quantités), processus de checkout complet, gestion des commandes (historique, suivi, annulation, remboursements), sélection des options de livraison, saisie des informations de paiement et support client
+\end{itemize}
+
+Le diagramme illustre également les relations d'extension et d'inclusion entre les cas d'utilisation, montrant la complexité et la robustesse du système e-commerce.
+
+\subsection{Diagramme de Classes}
+Le diagramme de classes suivant illustre l'architecture complète du système e-commerce Shot Shop, montrant les relations entre les différentes entités et leurs attributs :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{class-diagram.png}
+    \caption{Diagramme de classes UML du système Shot Shop}
+    \label{fig:class-diagram}
+\end{figure}
+
+Ce diagramme présente la structure des classes principales du système :
+\begin{itemize}
+    \item \textbf{User :} Gestion des utilisateurs et authentification
+    \item \textbf{Product :} Catalogue des produits et informations  
+    \item \textbf{Order :} Gestion des commandes et du processus d'achat
+    \item \textbf{Cart :} Panier d'achat et gestion des articles
+    \item \textbf{Category :} Organisation des produits par catégories
+    \item \textbf{Wishlist :} Liste de souhaits des utilisateurs
+    \item \textbf{Newsletter :} Gestion des abonnements
+    \item \textbf{Contact :} Formulaire de contact
+\end{itemize}
+
+% Interfaces du Site Web
+\section{Interfaces du Site Web}
+
+\subsection{Page d'Accueil}
+La page d'accueil présente une interface moderne et attrayante avec les éléments suivants :
+\begin{itemize}
+    \item \textbf{Header :} Navigation principale avec logo, menu de navigation et panier
+    \item \textbf{Hero Section :} Bannière principale avec appel à l'action et image de fond
+    \item \textbf{Section Produits :} Affichage des produits vedettes avec cartes interactives
+    \item \textbf{Section Newsletter :} Formulaire d'inscription à la newsletter
+    \item \textbf{Footer :} Informations de contact, liens sociaux et mentions légales
+\end{itemize}
+
+% Capture d'écran de la page d'accueil
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{homepage-screenshot.png}
+    \caption{Page d'accueil du site Shot Shop}
+    \label{fig:homepage}
+\end{figure}
+
+\subsection{Catalogue des Produits}
+L'interface du catalogue offre une expérience de navigation intuitive :
+\begin{itemize}
+    \item \textbf{Filtres avancés :} Catégories, prix, disponibilité, évaluations
+    \item \textbf{Recherche intelligente :} Barre de recherche avec suggestions automatiques
+    \item \textbf{Grille de produits :} Affichage en grille avec options de tri
+    \item \textbf{Pagination :} Navigation entre les pages de résultats
+\end{itemize}
+
+% Capture d'écran du catalogue
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{products-catalog-screenshot.png}
+    \caption{Catalogue des produits avec filtres et recherche}
+    \label{fig:products-catalog}
+\end{figure}
+
+\subsection{Page Produit Détail}
+Chaque produit dispose d'une page détaillée avec :
+\begin{itemize}
+    \item \textbf{Galerie d'images :} Images multiples avec zoom et navigation
+    \item \textbf{Informations produit :} Description, prix, disponibilité, caractéristiques
+    \item \textbf{Sélecteur de quantité :} Choix de la quantité à ajouter au panier
+    \item \textbf{Boutons d'action :} Ajouter au panier, ajouter aux favoris
+    \item \textbf{Section avis :} Évaluations et commentaires des clients
+\end{itemize}
+
+% Capture d'écran de la page produit
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{product-detail-screenshot.png}
+    \caption{Page détaillée d'un produit}
+    \label{fig:product-detail}
+\end{figure}
+
+\subsection{Panier d'Achat}
+L'interface du panier permet une gestion complète des articles :
+\begin{itemize}
+    \item \textbf{Liste des articles :} Affichage des produits avec images et détails
+    \item \textbf{Modification des quantités :} Augmentation/diminution des quantités
+    \textbf{Suppression d'articles :} Bouton de suppression pour chaque article
+    \item \textbf{Calcul automatique :} Sous-total, taxes et total final
+    \item \textbf{Bouton de commande :} Passage à l'étape de checkout
+\end{itemize}
+
+% Capture d'écran du panier
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{cart-screenshot.png}
+    \caption{Interface du panier d'achat}
+    \label{fig:cart}
+\end{figure}
+
+\subsection{Processus de Checkout}
+Le processus de commande en plusieurs étapes :
+\begin{itemize}
+    \item \textbf{Étape 1 - Informations :} Formulaire de saisie des coordonnées
+    \item \textbf{Étape 2 - Livraison :} Choix des options de livraison
+    \item \textbf{Étape 3 - Paiement :} Saisie des informations de paiement sécurisées
+    \item \textbf{Étape 4 - Confirmation :} Récapitulatif et confirmation de commande
+\end{itemize}
+
+% Capture d'écran du checkout
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{checkout-screenshot.png}
+    \caption{Processus de checkout en plusieurs étapes}
+    \label{fig:checkout}
+\end{figure}
+
+
+
+% Development
+\section{Développement}
+
+\subsection{Frontend}
+
+\subsubsection{Structure des Composants}
+L'architecture frontend est organisée en composants modulaires et réutilisables :
+
+\begin{lstlisting}[caption=Structure des composants React]
+// Composant principal de l'application
+const App = () => {
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <TooltipProvider>
+                <Sonner />
+                <LanguageProvider>
+                  <RTLWrapper>
+                    <BrowserRouter>
+                      <AnalyticsWrapper />
+                      <Routes>
+                        {/* Routes de l'application */}
+                        <Route path="/" element={<Index />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/product/:id" element={<ProductDetail />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                      </Routes>
+                    </BrowserRouter>
+                  </RTLWrapper>
+                </LanguageProvider>
+              </TooltipProvider>
+            </WishlistProvider>
+          </CartProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+};
+\end{lstlisting}
+
+\subsubsection{Fonctionnalités Principales}
+\begin{itemize}
+    \item \textbf{Routing :} Navigation entre les pages avec React Router
+    \item \textbf{État global :} Gestion de l'état avec Zustand et React Query
+    \item \textbf{Thème :} Système de thème clair/sombre
+    \item \textbf{Internationalisation :} Support multilingue avec Azure Translator et react-i18next
+    \item \textbf{Responsive design :} Interface adaptée à tous les appareils
+    \item \textbf{Analytics :} Intégration Google Analytics 4 (GA4) pour le suivi des performances
+    \item \textbf{Traduction automatique :} Système de traduction en temps réel avec Azure Cognitive Services
+    \item \textbf{Notifications :} Système de notifications toast avec Sonner
+    \item \textbf{Recherche avancée :} Fonctionnalité de recherche et filtrage des produits
+    \item \textbf{Liste de souhaits :} Gestion des produits favoris
+    \item \textbf{Panier persistant :} Sauvegarde automatique du panier avec localStorage
+\end{itemize}
+
+\subsubsection{Exemples de Composants}
+\begin{lstlisting}[caption=Composant ProductCard]
+const ProductCard = ({ product }) => {
+  const { addToCart, addToWishlist } = useCart();
+  
+  return (
+    <div className="product-card">
+      <img src={product.image} alt={product.name} />
+      <h3>{product.name}</h3>
+      <p className="price">{product.price}€</p>
+      <div className="actions">
+        <button onClick={() => addToCart(product)}>
+          Ajouter au panier
+        </button>
+        <button onClick={() => addToWishlist(product)}>
+          
+        </button>
+      </div>
+    </div>
+  );
+};
+\end{lstlisting}
+
+\subsubsection{Fonctionnalités Avancées Implémentées}
+
+\paragraph{Système de Recherche Intelligente}
+\begin{lstlisting}[caption=Composant de recherche avec suggestions]
+const SearchComponent = () => {
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSearch = useCallback(async (searchTerm) => {
+    if (searchTerm.length < 2) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/search?q=${searchTerm}`);
+      const data = await response.json();
+      setSuggestions(data.suggestions);
+    } catch (error) {
+      console.error('Erreur de recherche:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return (
+    <div className="search-container">
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          handleSearch(e.target.value);
+        }}
+        placeholder="Rechercher un produit..."
+        className="search-input"
+      />
+      {isLoading && <div className="search-spinner" />}
+      {suggestions.length > 0 && (
+        <ul className="search-suggestions">
+          {suggestions.map((suggestion, index) => (
+            <li key={index} onClick={() => navigateToProduct(suggestion.id)}>
+              {suggestion.name}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+\end{lstlisting}
+
+\paragraph{Système de Notifications Toast}
+\begin{lstlisting}[caption=Configuration des notifications avec Sonner]
+import { toast } from 'sonner';
+
+// Hook personnalisé pour les notifications
+const useNotifications = () => {
+  const showSuccess = (message) => {
+    toast.success(message, {
+      duration: 4000,
+      position: 'top-right',
+      style: {
+        background: '#10b981',
+        color: 'white',
+        border: 'none'
+      }
+    });
+  };
+
+  const showError = (message) => {
+    toast.error(message, {
+      duration: 6000,
+      position: 'top-right',
+      style: {
+        background: '#ef4444',
+        color: 'white',
+        border: 'none'
+      }
+    });
+  };
+
+  const showInfo = (message) => {
+    toast.info(message, {
+      duration: 4000,
+      position: 'top-right'
+    });
+  };
+
+  return { showSuccess, showError, showInfo };
+};
+\end{lstlisting}
+
+\paragraph{Système de Thème Dynamique}
+\begin{lstlisting}[caption=Gestion du thème avec Context API]
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+  const [isRTL, setIsRTL] = useState(false);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
+
+  const toggleRTL = () => {
+    const newRTL = !isRTL;
+    setIsRTL(newRTL);
+    localStorage.setItem('rtl', newRTL);
+    document.documentElement.setAttribute('dir', newRTL ? 'rtl' : 'ltr');
+  };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedRTL = localStorage.getItem('rtl') === 'true';
+    
+    setTheme(savedTheme);
+    setIsRTL(savedRTL);
+    
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.documentElement.setAttribute('dir', savedRTL ? 'rtl' : 'ltr');
+  }, []);
+
+  return (
+    <ThemeContext.Provider value={{ theme, isRTL, toggleTheme, toggleRTL }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+\end{lstlisting}
+
+\subsection{Backend}
+
+\subsubsection{Structure de l'Application}
+L'architecture backend suit le modèle MVC avec une organisation claire des responsabilités :
+
+\begin{lstlisting}[caption=Structure du serveur Express]
+const app = express();
+
+// Middleware de configuration
+app.use(cors({
+  origin: 'https://youareshot.com',
+  credentials: true
+}));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(passport.initialize());
+
+// Routes de l'application
+app.use("/auth", require("./routes/auth"));
+app.use('/contact', contactRouter);
+app.use('/api', newsletterRoute);
+app.use('/api', odooRoute);
+app.use('/api/abandoned-checkouts', abandonedCheckoutsRoute);
+
+// Gestion des fichiers statiques
+app.use('/uploads', express.static('uploads'));
+\end{lstlisting}
+
+\subsubsection{Entités et Modèles}
+\begin{lstlisting}[caption=Modèle User avec Mongoose]
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: [true, "Le nom d'utilisateur est requis"],
+    unique: true,
+    minlength: [3, "Le nom d'utilisateur doit contenir au moins 3 caractères"],
+    maxlength: [20, "Le nom d'utilisateur ne doit pas dépasser 20 caractères"]
+  },
+  email: {
+    type: String,
+    required: [true, "L'email est requis"],
+    unique: true,
+    lowercase: true,
+    match: [/\S+@\S+\.\S+/, "Adresse email invalide"]
+  },
+  password: {
+    type: String,
+    required: [true, "Le mot de passe est requis"],
+    minlength: [6, "Le mot de passe doit contenir au moins 6 caractères"]
+  },
+  profileImage: {
+    type: String,
+    default: ''
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  }
+});
+\end{lstlisting}
+
+\subsubsection{Contrôleurs REST}
+\begin{lstlisting}[caption=Contrôleur d'authentification]
+// Exemple de contrôleur pour l'authentification
+const authController = {
+  // Inscription d'un nouvel utilisateur
+  register: async (req, res) => {
+    try {
+      const { username, email, password } = req.body;
+      
+      // Validation des données
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      
+      // Vérification de l'existence de l'utilisateur
+      const existingUser = await User.findOne({ 
+        $or: [{ email }, { username }] 
+      });
+      
+      if (existingUser) {
+        return res.status(400).json({ 
+          message: "L'utilisateur existe déjà" 
+        });
+      }
+      
+      // Hashage du mot de passe
+      const hashedPassword = await bcrypt.hash(password, 12);
+      
+      // Création de l'utilisateur
+      const user = new User({
+        username,
+        email,
+        password: hashedPassword
+      });
+      
+      await user.save();
+      
+      res.status(201).json({ 
+        message: "Utilisateur créé avec succès" 
+      });
+    } catch (error) {
+      res.status(500).json({ 
+        message: "Erreur serveur" 
+      });
+    }
+  }
+};
+\end{lstlisting}
+
+\subsubsection{Services et Middleware Avancés}
+
+\paragraph{Service de Traduction Azure}
+\begin{lstlisting}[caption=Service d'intégration Azure Translator]
+const AzureTranslatorService = {
+  // Configuration du service
+  config: {
+    endpoint: process.env.AZURE_TRANSLATOR_ENDPOINT,
+    key: process.env.AZURE_TRANSLATOR_KEY,
+    region: process.env.AZURE_TRANSLATOR_REGION
+  },
+
+  // Traduction de texte
+  async translateText(text, targetLanguage, sourceLanguage = 'auto') {
+    try {
+      const response = await fetch(
+        `${this.config.endpoint}/translate?api-version=3.0&to=${targetLanguage}&from=${sourceLanguage}`,
+        {
+          method: 'POST',
+          headers: {
+            'Ocp-Apim-Subscription-Key': this.config.key,
+            'Ocp-Apim-Subscription-Region': this.config.region,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify([{ text }])
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Erreur Azure Translator: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return {
+        translatedText: result[0].translations[0].text,
+        detectedLanguage: result[0].detectedLanguage?.language || sourceLanguage,
+        confidence: result[0].detectedLanguage?.score || 1.0
+      };
+    } catch (error) {
+      console.error('Erreur de traduction Azure:', error);
+      throw new Error('Service de traduction temporairement indisponible');
+    }
+  },
+
+  // Traduction en lot
+  async translateBatch(texts, targetLanguage) {
+    const translations = [];
+    for (const text of texts) {
+      try {
+        const result = await this.translateText(text, targetLanguage);
+        translations.push(result);
+      } catch (error) {
+        translations.push({ translatedText: text, error: true });
+      }
+    }
+    return translations;
+  }
+};
+\end{lstlisting}
+
+\paragraph{Service d'Analytics Google Analytics 4}
+\begin{lstlisting}[caption=Service d'intégration GA4]
+const GA4Service = {
+  // Configuration GA4
+  config: {
+    measurementId: process.env.GA4_MEASUREMENT_ID,
+    apiSecret: process.env.GA4_API_SECRET,
+    endpoint: 'https://www.google-analytics.com/mp/collect'
+  },
+
+  // Suivi d'événement personnalisé
+  async trackEvent(eventName, parameters = {}) {
+    try {
+      const payload = {
+        client_id: this.generateClientId(),
+        events: [{
+          name: eventName,
+          params: {
+            event_category: 'user_interaction',
+            event_label: 'shot_shop',
+            timestamp: Date.now(),
+            ...parameters
+          }
+        }]
+      };
+
+      const response = await fetch(
+        `${this.config.endpoint}?measurement_id=${this.config.measurementId}&api_secret=${this.config.apiSecret}`,
+        {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Erreur GA4: ${response.status}`);
+      }
+
+      return { success: true, eventId: Date.now() };
+    } catch (error) {
+      console.error('Erreur de suivi GA4:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Suivi de conversion
+  async trackConversion(orderId, value, currency = 'EUR') {
+    return this.trackEvent('purchase', {
+      transaction_id: orderId,
+      value: value,
+      currency: currency,
+      items: []
+    });
+  },
+
+  // Génération d'ID client unique
+  generateClientId() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+};
+\end{lstlisting}
+
+\paragraph{Middleware de Validation et Sécurité}
+\begin{lstlisting}[caption=Middleware de validation avancée]
+// Middleware de validation des données
+const validateRequest = (schema) => {
+  return async (req, res, next) => {
+    try {
+      await schema.validateAsync(req.body, { abortEarly: false });
+      next();
+    } catch (error) {
+      const validationErrors = error.details.map(detail => ({
+        field: detail.path.join('.'),
+        message: detail.message,
+        value: detail.context?.value
+      }));
+      
+      res.status(400).json({
+        error: 'Validation failed',
+        details: validationErrors
+      });
+    }
+  };
+};
+
+// Middleware de rate limiting
+const rateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limite à 100 requêtes par fenêtre
+  message: {
+    error: 'Trop de requêtes depuis cette IP, veuillez réessayer plus tard.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+// Middleware de sécurité CORS
+const corsOptions = {
+  origin: [
+    'https://youareshot.com',
+    'https://www.youareshot.com',
+    process.env.FRONTEND_URL
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+\end{lstlisting}
+
+% Challenges Encountered
+\section{Défis Rencontrés}
+
+\subsection{Compilation et Intégration}
+\begin{itemize}
+    \item \textbf{Configuration Vite :} Optimisation de la configuration pour la production
+    \item \textbf{Compatibilité des dépendances :} Gestion des versions et résolution des conflits
+    \item \textbf{Build de production :} Optimisation des bundles et des assets
+\end{itemize}
+
+\subsection{Validation et Tests}
+\begin{itemize}
+    \item \textbf{Validation des formulaires :} Implémentation de schémas de validation robustes
+    \item \textbf{Tests unitaires :} Couverture de code et tests d'intégration
+    \item \textbf{Validation côté serveur :} Sécurisation des données d'entrée
+\end{itemize}
+
+\subsection{Performance et Optimisation}
+\begin{itemize}
+    \item \textbf{Chargement des images :} Optimisation et lazy loading
+    \item \textbf{Requêtes de base de données :} Indexation et optimisation des requêtes
+    \item \textbf{Rendu côté client :} Optimisation du rendu React et gestion de l'état
+\end{itemize}
+
+\subsection{Sécurité}
+\begin{itemize}
+    \item \textbf{Authentification :} Implémentation de JWT et sessions sécurisées
+    \item \textbf{Validation des données :} Protection contre les injections et attaques
+    \item \textbf{CORS :} Configuration sécurisée des origines autorisées
+\end{itemize}
+
+% Conclusion and Perspectives
+\section{Conclusion et Perspectives}
+
+\subsection{Leçons Apprises}
+Ce stage a été une expérience enrichissante qui m'a permis de :
+
+\begin{itemize}
+    \item \textbf{Maîtriser les technologies modernes :} React 18, TypeScript, Node.js, MongoDB, Azure Cognitive Services
+    \item \textbf{Comprendre l'architecture web :} Design patterns, séparation des responsabilités, microservices
+    \item \textbf{Intégrer des services externes :} Azure Translator, Google Analytics 4, APIs tierces
+    \item \textbf{Développer en équipe :} Collaboration, versioning, méthodologies agiles
+    \item \textbf{Gérer la complexité :} Organisation du code, documentation, tests, déploiement
+    \item \textbf{Optimiser les performances :} Lazy loading, mise en cache, Core Web Vitals
+    \item \textbf{Sécuriser les applications :} JWT, validation des données, CORS, rate limiting
+\end{itemize}
+
+\subsection{Améliorations Futures}
+Le projet Shot Shop présente plusieurs axes d'amélioration :
+
+\begin{itemize}
+    \item \textbf{Performance :} Implémentation de la mise en cache Redis, CDN pour les assets, optimisation des images WebP
+    \item \textbf{Scalabilité :} Migration vers une architecture microservices avec Docker et Kubernetes
+    \item \textbf{Fonctionnalités :} Système de recommandations IA, chatbot client, réalité augmentée pour les produits
+    \item \textbf{Sécurité :} Implémentation de l'authentification à deux facteurs, audit de sécurité automatisé
+    \item \textbf{Mobile :} Développement d'applications mobiles natives avec React Native
+    \item \textbf{IA et ML :} Analyse prédictive des ventes, détection de fraude, personnalisation avancée
+    \item \textbf{Analytics :} Dashboard temps réel, prédictions de tendances, A/B testing automatisé
+    \item \textbf{Accessibilité :} Conformité WCAG 2.1, support des lecteurs d'écran, navigation au clavier
+\end{itemize}
+
+\subsection{Impact du Projet}
+Le développement de cette plateforme e-commerce représente une étape importante dans la transformation numérique de la marque Shot Shop. La plateforme offre :
+
+\begin{itemize}
+    \item Une expérience utilisateur moderne et intuitive
+    \item Une base solide pour l'expansion en ligne
+    \item Des outils d'analyse et de suivi des performances
+    \item Une architecture évolutive pour les futures fonctionnalités
+\end{itemize}
+
+Ce stage a confirmé mon intérêt pour le développement web full-stack et m'a donné une vision claire des défis et des opportunités dans ce domaine en constante évolution.
+
+% Bibliography
+\section*{Bibliographie}
+\begin{thebibliography}{9}
+\bibitem{react} React Documentation. \textit{React - A JavaScript library for building user interfaces}. Disponible sur : https://react.dev/
+\bibitem{nodejs} Node.js Documentation. \textit{Node.js - JavaScript runtime}. Disponible sur : https://nodejs.org/
+\bibitem{mongodb} MongoDB Documentation. \textit{MongoDB - The most popular database for modern apps}. Disponible sur : https://docs.mongodb.com/
+\bibitem{express} Express.js Documentation. \textit{Express - Fast, unopinionated, minimalist web framework for Node.js}. Disponible sur : https://expressjs.com/
+\bibitem{typescript} TypeScript Documentation. \textit{TypeScript - JavaScript with syntax for types}. Disponible sur : https://www.typescriptlang.org/
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,147 @@
+<!-- ============================================= -->
+<!-- HOME COMPONENT — boile                         -->
+<!-- Ce fichier appelle directement app-navbar et    -->
+<!-- app-footer : ce sont les composants enfants du  -->
+<!-- layout de la page d'accueil.                    -->
+<!-- ============================================= -->
+<link rel="stylesheet" href="navbar/navbar.css">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="footer/footer.css">
+
+<!-- ===== Appel du composant Navbar ===== -->
+<app-navbar></app-navbar>
+
+<main class="home">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <img class="hero__bg" src="https://cdn.futura-sciences.com/sources/images/actu/cop28-extraction-petrole.jpeg" alt="Industrial refinery pipes">
+    <div class="hero__overlay"></div>
+    <div class="hero__inner">
+      <p class="eyebrow"><span class="eyebrow__dot"></span>Innovative Technology</p>
+      <h1 class="hero__title">Industrial Resource &amp; Oil<br>Exploration.</h1>
+      <p class="hero__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+      <a href="#" class="btn btn--primary">Get Started</a>
+    </div>
+  </section>
+
+  <!-- ================= FEATURE STRIP ================= -->
+  <section class="feature-strip">
+    <div class="feature-strip__inner">
+
+      <div class="feature-card">
+        <span class="feature-card__num">01</span>
+        <h3>Integrating Sustainability.</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__num">02</span>
+        <h3>CCUS Technology.</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__num">03</span>
+        <h3>Careers at Boile.</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about">
+    <div class="about__inner">
+
+      <div class="about__media">
+        <img src="https://media.istockphoto.com/id/1058926472/pt/foto/oil-pumpjack-against-a-sunset-sky.jpg?s=612x612&w=0&k=20&c=Gd3db7TnX_X0sfnNeglbNrziFuTn4hb_X5vmdKKe6lE=" alt="Aerial view of oil storage plant">
+        <div class="about__badge">
+          <ul>
+            <li><span class="check">✓</span>Lorem ipsum dolor sit amet</li>
+            <li><span class="check">✓</span>Vestibul pellentesque ligula</li>
+            <li><span class="check">✓</span>Interdum et malesuada fames</li>
+            <li><span class="check">✓</span>Donec egestas leo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="about__content">
+        <p class="eyebrow eyebrow--dark"><span class="eyebrow__dot"></span>About Us</p>
+        <h2>Innovative Solution for<br>Complex Energy.</h2>
+        <blockquote>“Lore ipsum is simply dummy text of the printing industry.”</blockquote>
+        <p class="about__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+
+        <div class="about__actions">
+          <a href="#" class="btn btn--primary">Learn More</a>
+          <a href="#" class="play-btn" aria-label="Play video">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <app-jeu class="about__jeu"></app-jeu>
+
+    </div>
+  </section>
+
+  <!-- ================= LOGO STRIP ================= -->
+  <section class="logos">
+    <div class="logos__inner">
+      <p class="logos__label">More than 20,000 Companies<br>are read on the <strong>ERAP</strong></p>
+      <div class="logos__row">
+        <span class="logo-chip">ARCHERY</span>
+        <span class="logo-chip">WORLDTEX</span>
+        <span class="logo-chip">TRUSTED</span>
+        <span class="logo-chip">CADENCE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CORE VALUES ================= -->
+  <section class="values">
+    <div class="values__inner">
+
+      <div class="values__grid">
+        <div class="value-card">
+          <span class="value-card__num">01</span>
+          <h3>Collaborative.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-card__num">02</span>
+          <h3>Efficient.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-card__num">03</span>
+          <h3>Progressive.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-card__num">04</span>
+          <h3>Respectful.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod.</p>
+        </div>
+      </div>
+
+      <div class="values__side">
+        <p class="eyebrow eyebrow--dark"><span class="eyebrow__dot"></span>Why Choose Us</p>
+        <h2>Our Core Values for<br>Industry Leadership.</h2>
+
+        <div class="values__portrait">
+          <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=900&auto=format&fit=crop" alt="Engineer on site">
+          <div class="values__portrait-badge">
+            <strong>15+</strong>
+            <span>Years Experience</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Appel du composant Footer ===== -->
+<app-footer></app-footer>

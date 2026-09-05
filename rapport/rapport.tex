@@ -1,0 +1,992 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage{forloop}
+\usepackage{changepage}
+\usepackage{etoolbox}
+\usepackage{setspace}
+\usepackage{tikz}
+
+% Page setup
+\geometry{margin=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% Code listing setup
+\lstset{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=tb,
+    tabsize=2,
+    columns=fixed,
+    showstringspaces=false,
+    showtabs=false,
+    keepspaces,
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red}
+}
+
+\lstdefinestyle{java}{language=Java, morekeywords={Spring, Boot, Component, Service, Controller, RestController, Autowired, RequestMapping, GetMapping, PostMapping, Value, RequestBody, ResponseEntity, Path, RequestParam, QueryParam}}
+\lstdefinestyle{typescript}{language=TypeScript, morekeywords={import, export, const, let, var, function, if, else, for, while, return, class, interface, type, async, await, Observable, HttpClient, Injectable, Component, Input, Output, EventEmitter}}
+\lstdefinestyle{python}{language=Python, morekeywords={import, from, as, def, class, return, if, else, for, while, in, not, and, or, True, False, None, print, self, lambda, try, except, raise, with, open, json, os, sys, re, subprocess, glob, argparse, pandas, numpy, RandomForestRegressor}}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{ETAP - Stage d'Immersion en Entreprise}
+\fancyhead[R]{Projet ETAP - Gestion des Factures}
+\fancyfoot[C]{\thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \thispagestyle{empty}
+    
+    \begin{center}
+        \vspace*{2cm}
+        
+        \includegraphics[width=3cm]{images/esprit.png}\\[0.5cm]
+        
+        {\large\textcolor{black}{ÉCOLE SUPÉRIEURE PRIVÉE D'INGÉNIERIE ET DE TECHNOLOGIES}\par}
+        \vspace{0.4cm}
+        
+        {\large\textcolor{black}{HONORIS UNITED UNIVERSITIES}\par}
+        
+                 \vspace{2cm}
+         
+         {\Huge\bfseries RAPPORT DE STAGE D'IMMERSION\\[0.3cm] EN ENTREPRISE\par}
+         
+         \vspace{2cm}
+         
+         \begin{minipage}{0.9\textwidth}
+             \begin{center}
+                 \large
+                 \textbf{Titre du projet :} Développement d'une plateforme de gestion de factures et d'estimation de consommation\\[0.2cm]
+                 \textbf{« ETAP Project »}\\[0.3cm]
+                 
+                 \begin{tabular}{ll}
+                     \textbf{Élaboré par :} & Mohamed Brahim Garram \\[0.2cm]
+                     \textbf{Période de stage :} & 02/07/2026 Au 02/09/2026 \\[0.2cm]
+                     \textbf{Effectué à :} & ETAP \\[0.2cm]
+                     \textbf{Encadré par :} & Hafedh Dargham (encadrant de stage)
+                 \end{tabular}
+                 
+                 \vspace{0.3cm}
+                 
+                 \textbf{Année académique 2025-2026}
+             \end{center}
+         \end{minipage}
+    \end{center}
+    
+\end{titlepage}
+
+% Acknowledgments
+\begin{center}
+\vspace*{3cm}
+
+{\Huge\bfseries Remerciements\par}
+
+\vspace{2cm}
+
+\begin{minipage}{0.8\textwidth}
+Je tiens à exprimer ma profonde gratitude à toute l'équipe de l'ETAP pour m'avoir accueilli et accompagné tout au long de ce stage enrichissant. 
+
+\vspace{1cm}
+
+Mes remerciements particuliers vont à :
+\begin{itemize}
+    \item \textbf{Hafedh Dargham}, mon encadrant de stage à l'ETAP, pour m'avoir donné cette opportunité unique, pour sa confiance et son accompagnement précieux tout au long de ce stage
+    \item L'ensemble de l'équipe technique de l'ETAP pour leur accueil chaleureux, leur disponibilité et le partage de leur expertise
+    \item L'\textbf{ESPRIT} pour la qualité de sa formation en ingénierie logicielle et la préparation à ce stage
+    \item Mes amis qui m'ont soutenu et encouragé tout au long de cette expérience
+    \item Ma famille pour leur soutien inconditionnel et leur compréhension pendant cette période de stage
+\end{itemize}
+
+\vspace{1cm}
+
+Ce stage m'a permis de mettre en pratique mes connaissances théoriques et de développer de nouvelles compétences dans le domaine du développement web full-stack et de l'intelligence artificielle appliquée à la gestion énergétique.
+\end{minipage}
+\end{center}
+
+\newpage
+
+% Abstract
+\begin{center}
+\vspace*{3cm}
+
+{\Huge\bfseries Résumé\par}
+
+\vspace{2cm}
+
+\begin{minipage}{0.8\textwidth}
+Ce rapport présente le travail réalisé lors de mon stage de développement web full-stack au sein de l'ETAP, portant sur la conception et le développement d'une plateforme de gestion de factures et d'estimation de consommation énergétique. Le projet a consisté à développer une application web complète utilisant Angular (front-end) et Spring Boot (back-end), avec une base de données MySQL, un module d'OCR (PaddleOCR) pour l'extraction automatique des factures, et un modèle d'apprentissage automatique (Random Forest + CAGR) pour l'estimation prédictive de consommation. L'objectif principal était de créer une plateforme performante, sécurisée et offrant une expérience utilisateur optimale aux opérateurs et chefs de région de l'ETAP.
+
+\vspace{1cm}
+
+\textbf{Mots-clés :} Gestion de factures, OCR PaddleOCR, Spring Boot, Angular, Random Forest, estimation de consommation, JWT, MySQL, Python
+\end{minipage}
+\end{center}
+
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Introduction
+\section{Introduction}
+L'évolution rapide des technologies web et l'importance croissante de la gestion énergétique ont créé un besoin constant d'innovation dans le développement d'applications web modernes. Dans ce contexte, mon stage au sein de l'ETAP m'a permis de participer au développement d'une plateforme de gestion de factures et d'estimation de consommation complète.
+
+Ce projet représente une opportunité unique d'appliquer les concepts théoriques appris lors de ma formation dans un environnement professionnel réel, tout en découvrant les défis et les exigences du développement web en entreprise.
+
+L'objectif de ce rapport est de présenter de manière détaillée le travail réalisé, les technologies utilisées, les défis rencontrés et les solutions apportées, ainsi que les perspectives d'évolution du projet.
+
+% Context and Project Importance
+\section{Contexte et Importance du Projet}
+
+\subsection{Contexte du Projet}
+Le projet ETAP s'inscrit dans une stratégie de digitalisation de l'ETAP, visant à moderniser la gestion des factures électriques, d'eau et de gaz sur l'ensemble de ses sites. La plateforme doit permettre aux opérateurs de saisir, suivre et analyser les factures, tout en bénéficiant d'un module d'estimation prédictive de la consommation future.
+
+\subsection{Importance Stratégique}
+\begin{itemize}
+    \item \textbf{Digitalisation :} Automatisation de la saisie manuelle des factures via OCR
+    \item \textbf{Optimisation :} Réduction des erreurs et gain de temps pour les opérateurs
+    \item \textbf{Prévision :} Capacité à anticiper la consommation future par région
+    \item \textbf{Décision :} Outils d'aide à la décision pour la planification énergétique
+    \item \textbf{Compétitivité :} Positionnement de l'ETAP dans la transition énergétique
+\end{itemize}
+
+% Company Presentation
+\section{Présentation de l'Entreprise}
+
+\subsection{ETAP : Vue d'ensemble}
+L'\textbf{Entreprise Tunisienne d'Activités Pétrolières (ETAP)} est un acteur majeur du secteur énergétique tunisien. Elle assure l'exploration, la production et la commercialisation d'hydrocarbures, et dispose d'un parc de sites et de compteurs répartis sur l'ensemble du territoire.
+
+\subsection{Mission et Vision}
+\begin{itemize}
+    \item \textbf{Mission :} Assurer l'exploration, la production et la commercialisation d'hydrocarbures en Tunisie
+    \item \textbf{Vision :} Moderniser les processus internes et optimiser la gestion énergétique
+    \item \textbf{Approche :} Digitalisation des opérations et intégration de solutions innovantes
+\end{itemize}
+
+% Logos
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{images/esprit.png}
+\caption{Logo ESPRIT}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{images/etap.png}
+\caption{Logo ETAP}
+\end{minipage}
+\end{figure}
+
+\subsection{Domaines d'Activité}
+\begin{itemize}
+    \item Exploration et production pétrolière et gazière
+    \item Gestion des sites énergétiques et des compteurs
+    \item Analyse de consommation et planification énergétique
+    \item Innovation technologique dans le secteur énergétique
+\end{itemize}
+
+\subsection{Encadrement et Organisation}
+Le stage s'est déroulé sous la supervision de \textbf{Hafedh Dargham}, encadrant de stage à l'ETAP. L'approche agile et les outils de versionnement ont facilité le suivi de l'avancement et la gestion du projet en autonomie.
+
+% Project Objectives
+\section{Objectifs du Projet}
+
+\subsection{Objectifs Principaux}
+\begin{enumerate}
+    \item \textbf{Gestion des factures :} CRUD complet des factures électriques, d'eau et de gaz
+    \item \textbf{OCR automatisé :} Extraction automatique des données à partir d'images de factures via PaddleOCR
+    \item \textbf{Estimation prédictive :} Modèle d'apprentissage automatique pour prédire la consommation future (Random Forest + CAGR)
+    \item \textbf{Sécurité :} Authentification JWT avec contrôle d'accès par rôle
+    \item \textbf{Ergonomie :} Interface intuitive et responsive pour tous les appareils
+\end{enumerate}
+
+\subsection{Objectifs Secondaires}
+\begin{itemize}
+    \item Statistiques de consommation par année et par région
+    \item Estimation multi-ressources (électricité, eau, gaz)
+    \item Fourchette de confiance pour les estimations
+    \item Interface avec onglets séparés par type de ressource
+\end{itemize}
+
+% Project Description
+\section{Description du Projet}
+
+\subsection{Conception et Planification}
+
+\subsubsection{Méthodologie Scrum}
+
+Le projet ETAP a été développé en utilisant la méthodologie Scrum, une approche agile qui a permis une gestion efficace du projet sur 8 semaines.
+
+\paragraph{Structure des Sprints}
+Le projet a été structuré en 8 sprints d'une semaine :
+
+\begin{itemize}
+    \item \textbf{Sprint 1 (Semaine 1) :} Initialisation du projet et mise en place de l'environnement de développement
+    \item \textbf{Sprint 2 (Semaine 2) :} Analyse des besoins, conception de l'architecture et création des maquettes
+    \item \textbf{Sprint 3 (Semaine 3) :} Développement du backend (Spring Boot) et mise en place de la base de données (MySQL)
+    \item \textbf{Sprint 4 (Semaine 4) :} Développement du frontend (Angular) et intégration des composants de base
+    \item \textbf{Sprint 5 (Semaine 5) :} Intégration de l'OCR (PaddleOCR) et du modèle d'estimation (Python/scikit-learn)
+    \item \textbf{Sprint 6 (Semaine 6) :} Développement du module d'estimation multi-ressources (eau, gaz)
+    \item \textbf{Sprint 7 (Semaine 7) :} Tests, optimisation des performances et corrections de bugs
+    \item \textbf{Sprint 8 (Semaine 8) :} Déploiement final et documentation
+\end{itemize}
+
+\paragraph{Cérémonies Scrum}
+J'ai respecté les cérémonies Scrum essentielles adaptées au travail individuel :
+
+\begin{itemize}
+    \item \textbf{Sprint Planning (2h) :} Session de planification au début de chaque sprint pour définir les objectifs et décomposer les tâches techniques
+    \item \textbf{Suivi quotidien :} Point journalier sur l'avancement et les blocages
+    \item \textbf{Sprint Review (1h) :} Révision et validation des fonctionnalités développées avec l'encadrant de stage
+    \item \textbf{Sprint Retrospective (1h) :} Analyse des bonnes pratiques et identification des axes d'amélioration
+\end{itemize}
+
+\paragraph{Outils de Gestion Scrum}
+\begin{itemize}
+    \item \textbf{Git/GitHub :} Gestion du code source, suivi des issues et pull requests
+    \item \textbf{VS Code :} IDE de développement frontend (Angular/TypeScript)
+    \item \textbf{IntelliJ IDEA :} IDE de développement backend (Spring Boot/Java)
+    \item \textbf{Postman :} Test et documentation des API REST
+\end{itemize}
+
+\subsubsection{Phase de Conception}
+La phase de conception a duré deux semaines, incluant :
+\begin{itemize}
+    \item Analyse des besoins et des exigences fonctionnelles
+    \item Conception de l'architecture technique
+    \item Création des maquettes et prototypes
+    \item Planification des tâches et estimation des délais
+\end{itemize}
+
+\subsection{Choix Technologiques}
+
+\subsubsection{Frontend}
+\begin{itemize}
+    \item \textbf{Angular 19} : Framework moderne pour la création d'interfaces utilisateur interactives
+    \item \textbf{TypeScript} : Langage typé pour un développement plus robuste et maintenable
+    \item \textbf{SCSS} : Préprocesseur CSS pour un design responsive et moderne
+    \item \textbf{Angular CLI} : Outil de build et de génération de composants
+\end{itemize}
+
+\subsubsection{Backend}
+\begin{itemize}
+    \item \textbf{Spring Boot} : Framework Java pour la création d'API REST robustes
+    \item \textbf{Java 17} : Langage de programmation principal
+    \item \textbf{Spring Security} : Sécurité et authentification JWT
+    \item \textbf{Spring Data JPA} : Accès aux données et persistance
+\end{itemize}
+
+\subsubsection{Base de Données}
+\begin{itemize}
+    \item \textbf{MySQL} : Système de gestion de base de données relationnelle
+    \item \textbf{JPA/Hibernate} : ORM pour la couche de persistance
+    \item \textbf{Indexation optimisée} : Performance des requêtes agrégées
+\end{itemize}
+
+\subsubsection{OCR et Intelligence Artificielle}
+\begin{itemize}
+    \item \textbf{PaddleOCR} : Moteur d'OCR open source pour l'extraction de texte
+    \item \textbf{Python} : Script d'extraction et parsing du JSON
+    \item \textbf{scikit-learn} : Random Forest pour la prédiction de consommation
+    \item \textbf{Pandas/NumPy} : Traitement et analyse des données
+\end{itemize}
+
+\begin{table}[h]
+  \centering
+  \caption{Performances du modèle (validation sur données historiques)}
+  \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Métrique} & \textbf{Valeur} \\
+    \hline
+    R² & 0.949 \\
+    MAPE & 8.7 \% \\
+    MAE & 1,18 M \\
+    \hline
+  \end{tabular}
+  \label{tab:perf}
+\end{table}
+
+\subsection{Outils et Frameworks}
+Le développement du projet ETAP a nécessité l'utilisation d'un ensemble d'outils modernes :
+
+\begin{itemize}
+    \item \textbf{Versioning :} Git avec GitHub pour la gestion des versions et le suivi du code
+    \item \textbf{IDE Frontend :} Visual Studio Code pour le développement Angular
+    \item \textbf{IDE Backend :} IntelliJ IDEA pour le développement Spring Boot
+    \item \textbf{Language ML :} Python pour les scripts OCR et d'estimation
+    \item \textbf{API Testing :} Postman pour tester et documenter les API REST
+    \item \textbf{Terminal :} PowerShell pour l'exécution des scripts Python
+    \item \textbf{Base de données :} MySQL Workbench pour la gestion de la base de données
+\end{itemize}
+
+% Images des outils
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{git-logo.png}
+\caption{Git \& GitHub}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{postman-logo.png}
+\caption{Postman}
+\end{minipage}
+\hfill
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{vscode-logo.png}
+\caption{Visual Studio Code}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{intellij.png}
+\caption{IntelliJ IDEA}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{mysql.png}
+\caption{MySQL}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{python-logo.png}
+\caption{Python}
+\end{minipage}
+\end{figure}
+
+\subsection{Architecture}
+L'architecture du projet suit un modèle clair avec une séparation des responsabilités :
+
+\begin{itemize}
+    \item \textbf{Présentation (Frontend) :} Composants Angular organisés en modules et composants réutilisables
+    \item \textbf{Logique métier (Backend) :} Contrôleurs, services et entités JPA
+    \item \textbf{Données :} Base de données MySQL avec schémas relationnels
+    \item \textbf{API REST :} Interface de communication entre frontend et backend
+    \item \textbf{Services externes :} PaddleOCR (Python) et modèle d'estimation
+    \item \textbf{Sécurité :} Authentification JWT avec contrôle d'accès par rôle
+\end{itemize}
+
+\subsection{Intégration des Services Externes}
+
+\subsubsection{OCR avec PaddleOCR}
+L'une des fonctionnalités clés du projet ETAP est l'intégration de PaddleOCR pour l'extraction automatique des données de factures. Cette intégration permet aux opérateurs de gagner un temps considérable dans la saisie des factures.
+
+\begin{itemize}
+    \item \textbf{Extraction automatique :} Numéro de facture, période, consommation, montant
+    \item \textbf{Reconnaissance bilingue :} Support des factures en arabe et en français
+    \item \textbf{Validation :} Vérification des champs extraits avant enregistrement
+    \item \textbf{Performance :} Temps de traitement < 3 secondes par facture
+\end{itemize}
+
+\begin{lstlisting}[caption=Script OCR PaddleOCR pour factures STEG]
+import sys, json, subprocess, glob, io, re
+import os
+
+image_path = sys.argv[1]
+out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "ocr_tmp")
+os.makedirs(out_dir, exist_ok=True)
+
+result = subprocess.run(
+    ["paddleocr", "ocr", "-i", image_path, "--lang", "fr",
+     "--device", "cpu", "--save_path", out_dir],
+    capture_output=True, text=True, timeout=180
+)
+
+json_files = glob.glob(os.path.join(out_dir, "*_res.json"))
+with open(json_files[0], 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+texts = data.get("rec_texts", [])
+result_dict = {}
+
+for i, t in enumerate(texts):
+    tl = t.lower().strip()
+    if 'n' in tl and 'facture' in tl:
+        for j in range(i + 1, min(i + 4, len(texts))):
+            n = re.sub(r'[^\d]', '', texts[j])
+            if n.isdigit() and len(n) >= 5:
+                result_dict["numeroFacture"] = n
+                break
+    # Extraction des autres champs...
+
+print(json.dumps(result_dict, ensure_ascii=False))
+\end{lstlisting}
+
+\subsubsection{Modèle d'Estimation Prédictive}
+L'intégration du modèle d'estimation permet de prédire la consommation future basée sur l'historique des données.
+
+\begin{itemize}
+    \item \textbf{Random Forest :} Modèle d'apprentissage automatique pour la prédiction
+    \item \textbf{CAGR historique :} Croissance annuelle composée pour la projection
+    \item \textbf{Fourchette de confiance :} Intervalles bas/haute pour chaque estimation
+    \item \textbf{Multi-ressources :} Électricité (kWh), Eau (m³), Gaz (m³)
+\end{itemize}
+
+\begin{lstlisting}[caption=Modèle d'estimation par CAGR historique]
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+
+CSV = "consommation_dataset_locaux.csv"
+df = pd.read_csv(CSV)
+
+# Calcul du CAGR historique par local
+def _cagr(local):
+    sub = df[df["local"] == local].sort_values("annee")
+    last_10 = sub.tail(10)
+    first_conso = last_10.iloc[0]["consommationTotale"]
+    last_conso = last_10.iloc[-1]["consommationTotale"]
+    n = len(last_10) - 1
+    return (last_conso / first_conso) ** (1.0 / n) - 1
+
+# Estimation pour une annee cible
+def estimer(annee, local, meteo_factor=1.0, activite=1.0):
+    cagr = LOCAL_CAGR[local] * meteo_factor * activite
+    projection = last_conso * (1 + cagr) ** years_ahead
+    margin = 0.15 + 0.02 * max(0, years_ahead - 5)
+    return {
+        "estime": round(projection),
+        "bas": round(projection * (1 - margin)),
+        "haut": round(projection * (1 + margin)),
+        "montant": round(projection * LOCAL_PRIX[local])
+    }
+\end{lstlisting}
+
+% Diagrams
+\section{Diagrammes}
+
+\subsection{Diagramme de Cas d'Utilisation}
+Le diagramme de cas d'utilisation suivant illustre les interactions entre les différents acteurs et les fonctionnalités du système ETAP :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{use-case-diagram.png}
+    \caption{Diagramme de cas d'utilisation UML du système ERAP}
+    \label{fig:use-case-diagram}
+\end{figure}
+
+Ce diagramme présente une architecture complète des cas d'utilisation du système avec trois acteurs principaux :
+
+\begin{itemize}
+    \item \textbf{Administrateur :} Accès au panneau d'administration avec gestion des utilisateurs, des compteurs et des locaux, configuration du système
+    
+    \item \textbf{Chef de région :} Saisie et suivi des factures, visualisation des statistiques, estimation de consommation par type de ressource (électricité, eau, gaz)
+    
+    \item \textbf{Système (OCR / ML) :} Services automatisés d'extraction OCR et d'estimation prédictive
+\end{itemize}
+
+\subsection{Diagramme de Classes}
+Le diagramme de classes suivant illustre l'architecture du système ETAP :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{class-diagram.png}
+    \caption{Diagramme de classes UML du système ETAP}
+    \label{fig:class-diagram}
+\end{figure}
+
+Ce diagramme présente la structure des classes principales du système :
+\begin{itemize}
+    \item \textbf{Utilisateur :} Gestion des comptes et authentification
+    \item \textbf{Facture :} Informations de la facture (numéro, période, montant, etc.)
+    \item \textbf{Compteur :} Liaison facture-compteur avec numéro de série
+    \item \textbf{Local :} Sites et emplacements gérés par l'ETAP
+    \item \textbf{Consommation :} Données historiques de consommation
+\end{itemize}
+
+% Interfaces du Site Web
+\section{Interfaces du Site Web}
+
+\subsection{Page de Connexion}
+La page de connexion offre une authentification sécurisée :
+\begin{itemize}
+    \item \textbf{Formulaire :} Email et mot de passe avec validation
+    \item \textbf{Sécurité :} Authentification JWT
+    \item \textbf{Rôles :} Différenciation Admin / Chef de région
+\end{itemize}
+
+% Capture d'écran de la page de connexion
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{login.png}
+    \caption{Page de connexion}
+    \label{fig:login}
+\end{figure}
+
+\subsection{Tableau de Bord}
+Le tableau de bord principal affiche les KPIs et statistiques :
+\begin{itemize}
+    \item \textbf{KPIs :} Nombre de factures, consommation totale, montant total
+    \item \textbf{Graphiques :} Répartition par région et par période
+    \item \textbf{Navigation :} Accès rapide aux fonctionnalités
+\end{itemize}
+
+% Capture d'écran du tableau de bord
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{dashboard.png}
+    \caption{Tableau de bord principal}
+    \label{fig:dashboard}
+\end{figure}
+
+\subsection{Gestion des Factures}
+L'interface de gestion permet le CRUD complet des factures :
+\begin{itemize}
+    \item \textbf{Liste :} Tableau avec recherche et filtrage par statut
+    \item \textbf{Création :} Formulaire avec pré-remplissage OCR
+    \item \textbf{Détail :} Vue complète d'une facture avec tous les champs
+\end{itemize}
+
+% Capture d'écran de la gestion des factures
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{facture-screen.png}
+    \caption{Interface de gestion des factures}
+    \label{fig:factures}
+\end{figure}
+
+\subsection{Module OCR}
+Le module OCR permet l'extraction automatique des données :
+\begin{itemize}
+    \item \textbf{Import :} Upload d'une image de facture
+    \item \textbf{Extraction :} Analyse automatique via PaddleOCR
+    \item \textbf{Vérification :} Vérification des champs extraits avant enregistrement
+\end{itemize}
+
+% Capture d'écran du module OCR
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ocr.png}
+    \caption{Module d'extraction OCR}
+    \label{fig:ocr}
+\end{figure}
+
+\subsection{Estimation de Consommation}
+L'interface d'estimation propose un module prédictif avancé :
+\begin{itemize}
+    \item \textbf{Onglets :} Électricité, Eau, Gaz avec couleurs distinctes
+    \item \textbf{Contrôles :} Année, local, bouton d'estimation individuelle et globale
+    \item \textbf{Graphiques :} Barres de consommation (kWh/m³) et montant (TND)
+    \item \textbf{Résultats :} Cards avec fourchette de confiance et indicateur d'extrapolation
+\end{itemize}
+
+% Capture d'écran de l'estimation
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{consommation.png}
+    \caption{Interface d'estimation de consommation}
+    \label{fig:forecast}
+\end{figure}
+
+
+
+% Development
+\section{Développement}
+
+\subsection{Frontend}
+
+\subsubsection{Structure des Composants}
+L'architecture frontend est organisée en composants modulaires et réutilisables :
+
+\begin{lstlisting}[style=typescript, caption=Composant Region avec 3 onglets]
+@Component({
+  selector: 'app-region',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './region.html',
+  styleUrls: ['./region.css']
+})
+export class RegionComponent {
+  activeTab: 'electricite' | 'eau' | 'gaz' = 'electricite';
+  forecastResults: ForecastResult[] = [];
+  eauResults: ForecastResult[] = [];
+  gazResults: ForecastResult[] = [];
+  forecastAnnee: number = new Date().getFullYear() + 1;
+  forecastLocal: string = 'all';
+
+  constructor(private factureService: FactureService) {}
+
+  runEau(): void {
+    this.eauLoading = true;
+    this.factureService.forecastEau(this.forecastAnnee, this.forecastLocal)
+      .subscribe({
+        next: (data) => { this.eauResults = data; this.eauLoading = false; },
+        error: (err) => { this.eauError = 'Erreur de calcul'; }
+      });
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Service API}
+\begin{lstlisting}[style=typescript, caption=Service d'appel API pour l'estimation]
+@Injectable({ providedIn: 'root' })
+export class FactureService {
+  private apiUrl = 'http://localhost:8080';
+
+  forecast(annee: number, local: string, meteo: number = 1.0)
+    : Observable<ForecastResult[]> {
+    return this.http.get<ForecastResult[]>(
+      `${this.apiUrl}/factures/forecast`, {
+        params: { annee, local, meteo }
+      }
+    );
+  }
+
+  forecastEau(annee: number, local: string)
+    : Observable<ForecastResult[]> {
+    return this.http.get<ForecastResult[]>(
+      `${this.apiUrl}/forecast/eau`, {
+        params: { annee, local }
+      }
+    );
+  }
+
+  forecastGaz(annee: number, local: string)
+    : Observable<ForecastResult[]> {
+    return this.http.get<ForecastResult[]>(
+      `${this.apiUrl}/forecast/gaz`, {
+        params: { annee, local }
+      }
+    );
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Fonctionnalités Principales}
+\begin{itemize}
+    \item \textbf{Routing :} Navigation entre les pages avec Angular Router
+    \item \textbf{État :} Gestion de l'état avec services injectables
+    \item \textbf{Onglets :} Système d'onglets pour les 3 types de ressources
+    \item \textbf{Responsive :} Interface adaptée à tous les appareils
+    \item \textbf{Graphiques :} Bar charts CSS animés pour la visualisation
+    \item \textbf{Notifications :} Messages de succès et d'erreur
+\end{itemize}
+
+\subsubsection{Exemples de Composants}
+\begin{lstlisting}[style=typescript, caption=Modèle ForecastResult]
+export interface ForecastResult {
+  annee: number;
+  type: string;
+  local: string;
+  region: string;
+  estime: number;
+  bas: number;
+  haut: number;
+  montant: number;
+  montantBas: number;
+  montantHaut: number;
+  warn: boolean;
+  meteo: number;
+  growth: number;
+  activite: number;
+}
+\end{lstlisting}
+
+\subsection{Backend}
+
+\subsubsection{Structure de l'Application}
+L'architecture backend suit le modèle MVC avec une organisation claire des responsabilités :
+
+\begin{lstlisting}[style=java, caption=Contrôleur des factures et estimations]
+@RestController
+@RequestMapping("/factures")
+public class factureController {
+
+    @Autowired private FactureService factureService;
+    @Autowired private ConsommationForecastService forecastService;
+    @Autowired private ConsommationEauGazService eauGazService;
+
+    @GetMapping("/forecast")
+    public ResponseEntity<List<ForecastResult>> forecast(
+            @RequestParam int annee,
+            @RequestParam(defaultValue = "all") String local,
+            @RequestParam(defaultValue = "1.0") double meteo) {
+        return ResponseEntity.ok(
+            forecastService.forecast(annee, local, meteo, 0.03, 1.0));
+    }
+
+    @GetMapping("/forecast/eau")
+    public ResponseEntity<List<ForecastResult>> forecastEau(
+            @RequestParam int annee,
+            @RequestParam(defaultValue = "all") String local) {
+        return ResponseEntity.ok(
+            eauGazService.forecast("eau", annee, local, 1.0, 0.03, 1.0));
+    }
+
+    @GetMapping("/forecast/gaz")
+    public ResponseEntity<List<ForecastResult>> forecastGaz(
+            @RequestParam int annee,
+            @RequestParam(defaultValue = "all") String local) {
+        return ResponseEntity.ok(
+            eauGazService.forecast("gaz", annee, local, 1.0, 0.03, 1.0));
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Entités et Modèles}
+\begin{lstlisting}[style=java, caption=Entité Facture avec JPA]
+@Entity
+@Table(name = "factures")
+public class Facture {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String numeroFacture;
+
+    private int mois;
+    private int annee;
+    private int ancienIndex;
+    private int nouveauIndex;
+    private int consommation;
+    private double montant;
+    private double netAPayer;
+
+    @ManyToOne
+    @JoinColumn(name = "compteur_id")
+    private Compteur compteur;
+
+    @ManyToOne
+    @JoinColumn(name = "local_id")
+    private Local local;
+}
+\end{lstlisting}
+
+\subsubsection{Services et Middleware}
+
+\paragraph{Service d'Estimation}
+\begin{lstlisting}[style=java, caption=Service d'estimation par CAGR historique]
+@Service
+public class ConsommationForecastService {
+
+    private final String python;
+    private final String scriptPath;
+
+    public ConsommationForecastService(
+        @Value("${erap.forecast.python:python}") String python,
+        @Value("${erap.forecast.script:../../ml/modele_prevision.py}")
+        String scriptProp) {
+        this.python = python;
+        Path script = Paths.get(scriptProp);
+        if (!script.isAbsolute()) {
+            script = Paths.get(System.getProperty("user.dir"), scriptProp);
+        }
+        this.scriptPath = script.toAbsolutePath().toString();
+    }
+
+    public List<ForecastResult> forecast(int annee, String local,
+            double meteo, double growth, double activite) {
+        // Construction de la commande Python
+        List<String> cmd = List.of(python, scriptPath,
+            "--annee", String.valueOf(annee),
+            "--local", local,
+            "--meteo", String.valueOf(meteo));
+
+        // Exécution via ProcessBuilder
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        pb.redirectErrorStream(true);
+        Process p = pb.start();
+
+        // Parsing de la sortie JSON
+        String output = new String(p.getInputStream().readAllBytes());
+        return parseOutput(output);
+    }
+}
+\end{lstlisting}
+
+\paragraph{Service OCR}
+\begin{lstlisting}[style=java, caption=Service d'extraction OCR via PaddleOCR]
+@Service
+public class OcrFactureService {
+
+    private final String python;
+    private final String scriptPath;
+
+    public OcrFactureService(
+        @Value("${erap.ocr.python:python}") String python,
+        @Value("${erap.ocr.script:../../ml/ocr_paddle.py}")
+        String scriptPath) {
+        this.python = python;
+        this.scriptPath = scriptPath;
+    }
+
+    public Map<String, Object> extract(String imagePath) {
+        List<String> cmd = List.of(python, scriptPath, imagePath);
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        pb.redirectErrorStream(true);
+        Process p = pb.start();
+        String json = new String(p.getInputStream().readAllBytes());
+        return parseJson(json);
+    }
+}
+\end{lstlisting}
+
+\paragraph{Middleware de Sécurité}
+\begin{lstlisting}[style=java, caption=Configuration JWT et Sécurité]
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(sm -> sm.sessionCreationPolicy(STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/factures/**").authenticated()
+                .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+}
+\end{lstlisting}
+
+% Challenges Encountered
+\section{Défis Rencontrés}
+
+\subsection{Intégration OCR}
+\begin{itemize}
+    \item \textbf{Remplacement de Tesseract :} Migration vers PaddleOCR pour une meilleure précision sur les factures bilingues (arabe/français)
+    \item \textbf{Parsing JSON :} Gestion du format de sortie spécifique à PaddleOCR sans bibliothèque Jackson
+    \item \textbf{Encodage :} Problèmes d'encodage UTF-8 avec les caractères spéciaux arabes
+\end{itemize}
+
+\subsection{Modèle d'Estimation}
+\begin{itemize}
+    \item \textbf{Qualité des données :} Génération de données synthétiques réalistes pour l'entraînement
+    \item \textbf{Extrapolation :} Détection des années lointaines et avertissements d'extrapolation
+    \item \textbf{Multi-ressources :} Extension du modèle pour eau et gaz avec des patterns différents
+\end{itemize}
+
+\subsection{Performance et Sécurité}
+\begin{itemize}
+    \item \textbf{Temps de réponse :} Optimisation de l'appel Python depuis Java (ProcessBuilder)
+    \item \textbf{JWT :} Implémentation de l'authentification et du contrôle d'accès par rôle
+    \item \textbf{CORS :} Configuration sécurisée pour le développement frontend/backend
+\end{itemize}
+
+\subsection{Compatibilité}
+\begin{itemize}
+    \item \textbf{Versions :} Gestion des dépendances entre Angular 19, Spring Boot et Java 17
+    \item \textbf{Build :} Optimisation du bundle Angular et gestion des budgets CSS
+    \item \textbf{Paths :} Résolution des chemins relatifs pour les scripts Python depuis le backend
+\end{itemize}
+
+% Conclusion and Perspectives
+\section{Conclusion et Perspectives}
+
+\subsection{Leçons Apprises}
+Ce stage a été une expérience enrichissante qui m'a permis de :
+
+\begin{itemize}
+    \item \textbf{Maîtriser les technologies modernes :} Angular 19, Spring Boot, Python, PaddleOCR, scikit-learn
+    \item \textbf{Comprendre l'architecture web :} Design patterns, séparation des responsabilités, API REST
+    \item \textbf{Intégrer l'IA :} OCR et modèles d'estimation en environnement professionnel
+    \item \textbf{Gérer un projet seul :} Organisation, planification et suivi en autonomie
+    \item \textbf{Gérer la complexité :} Organisation du code, documentation, tests
+    \item \textbf{Sécuriser les applications :} JWT, validation des données, CORS
+\end{itemize}
+
+\subsection{Améliorations Futures}
+Le projet ERAP présente plusieurs axes d'amélioration :
+
+\begin{itemize}
+    \item \textbf{Performance :} Mise en cache des estimations, optimisation des appels Python
+    \item \textbf{Données réelles :} Enrichissement du modèle avec de vraies données historiques de l'ETAP
+    \item \textbf{Fonctionnalités :} Cartographie des sites (OpenStreetMap), export PDF, alertes
+    \item \textbf{Modèle :} Facteurs exogènes (météo réelle, indice d'activité industrielle)
+    \item \textbf{Mobile :} Développement d'applications mobiles natives avec React Native
+    \item \textbf{Analytics :} Dashboard temps réel, prédictions de tendances, A/B testing
+\end{itemize}
+
+\subsection{Impact du Projet}
+Le développement de cette plateforme représente une étape importante dans la transformation numérique de l'ETAP. La plateforme offre :
+
+\begin{itemize}
+    \item Une expérience utilisateur moderne et intuitive
+    \item L'automatisation de la saisie des factures via OCR
+    \item Un module d'estimation prédictive multi-ressources
+    \item Une architecture évolutive pour les futures fonctionnalités
+\end{itemize}
+
+Ce stage a confirmé mon intérêt pour le développement web full-stack et l'intelligence artificielle appliquée à la gestion énergétique.
+
+% Bibliography
+\section*{Bibliographie}
+\begin{thebibliography}{9}
+\bibitem{spring} Spring Boot --- Documentation officielle, \url{https://spring.io/projects/spring-boot}.
+\bibitem{angular} Angular --- Documentation officielle, \url{https://angular.dev}.
+\bibitem{paddle} PaddleOCR --- \url{https://github.com/PaddlePaddle/PaddleOCR}.
+\bibitem{sklearn} scikit-learn --- Random Forest, \url{https://scikit-learn.org}.
+\bibitem{mysql} MySQL --- \url{https://www.mysql.com}.
+\bibitem{jwt} JWT --- RFC 7519, \url{https://jwt.io}.
+\bibitem{python} Python --- \url{https://www.python.org}.
+\bibitem{typescript} TypeScript --- \url{https://www.typescriptlang.org}.
+\end{thebibliography}
+
+\end{document}

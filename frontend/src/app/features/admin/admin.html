@@ -1,0 +1,355 @@
+<div class="page">
+
+  <!-- ===== EN-TÊTE DE PAGE ===== -->
+  <header class="page-head">
+    <div>
+      <span class="eyebrow">Espace administrateur</span>
+      <h1>Tableau de bord — Utilisateurs</h1>
+      <p>Gérez les utilisateurs de la plateforme : statistiques, liste et création de comptes.</p>
+    </div>
+    <div class="sync-badge">
+      <i class="sync-dot"></i>
+      <span>Synchronisé <b id="syncTime">à l'instant</b></span>
+    </div>
+  </header>
+
+  <!-- ===== STATISTIQUES (KPI interactives) ===== -->
+  <section class="kpi-grid">
+    @for (card of cards; track card.label; let i = $index) {
+      <article
+        class="kpi-card {{ card.color }}"
+        [class.flipped]="flippedCard === i"
+        (click)="flipCard($event, i)"
+        (keydown.enter)="flipCard($event, i)"
+        tabindex="0"
+        role="button"
+        [attr.aria-pressed]="flippedCard === i"
+      >
+        <div class="kpi-inner">
+          <!-- FACE AVANT -->
+          <div class="kpi-face kpi-front">
+            <div class="kpi-top">
+              <div class="kpi-icon">
+                @switch (i) {
+                  @case (0) {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  }
+                  @case (1) {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  }
+                  @case (2) {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                  }
+                  @case (3) {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                  }
+                }
+              </div>
+              <span class="kpi-chip">{{ card.chip }}</span>
+            </div>
+
+            <span class="kpi-label">{{ card.label }}</span>
+
+            @switch (i) {
+              @case (0) {
+                <span class="kpi-value" id="statTotal">{{ total }}</span>
+              }
+              @case (1) {
+                <span class="kpi-value" id="statActifs">{{ actifs }}</span>
+              }
+              @case (2) {
+                <span class="kpi-value" id="statInactifs">{{ inactifs }}</span>
+              }
+              @case (3) {
+                <span class="kpi-value"><span id="statRate">{{ activationRate }}</span><small>%</small></span>
+              }
+            }
+
+            <span class="kpi-sub">{{ card.sub }}</span>
+
+            <svg class="spark" viewBox="0 0 80 28" preserveAspectRatio="none">
+              @switch (i) {
+                @case (0) { <polyline points="0,20 14,17 28,20 42,10 56,14 70,4 80,7"/> }
+                @case (1) { <polyline points="0,22 14,18 28,19 42,11 56,13 70,6 80,9"/> }
+                @case (2) { <polyline points="0,6 14,10 28,8 42,15 56,13 70,21 80,19"/> }
+                @case (3) { <polyline points="0,18 14,19 28,14 42,16 56,9 70,11 80,5"/> }
+              }
+            </svg>
+          </div>
+
+          <!-- FACE ARRIÈRE -->
+          <div class="kpi-face kpi-back">
+            <span class="kpi-back-title">{{ card.backTitle }}</span>
+            <div class="kpi-back-list">
+              @for (row of cardBackItems(i); track row.label) {
+                <div class="kpi-back-row">
+                  <i class="dot" [style.background]="row.color"></i>
+                  <span>{{ row.label }}</span>
+                  <b>{{ row.value }}</b>
+                </div>
+              }
+            </div>
+            <span class="kpi-back-hint">↺ Re-cliquer pour revenir</span>
+          </div>
+        </div>
+      </article>
+    }
+  </section>
+
+  <!-- ===== CHARTS INTERACTIFS ===== -->
+  <section class="bento">
+
+    <div class="card chart-card">
+      <div class="card-head">
+        <div>
+          <span class="eyebrow">Répartition</span>
+          <h2>Utilisateurs par rôle</h2>
+        </div>
+        @if (activeRole) {
+          <button type="button" class="chip-action" (click)="resetRoleFilter()">✕ Voir tout</button>
+        }
+      </div>
+
+      <div class="role-bars">
+        @for (seg of roleSegments; track seg.role) {
+          <button
+            type="button"
+            class="bar-row"
+            [class.active]="activeRole === seg.role"
+            (click)="onSelectRole(seg.role)"
+          >
+            <span class="bar-label">
+              <i class="dot" [style.background]="seg.color"></i>
+              {{ roleLabels[seg.role] }}
+            </span>
+            <span class="bar-track">
+              <span class="bar-fill" [attr.data-role]="seg.role" [style.background]="seg.color"></span>
+            </span>
+            <b class="bar-value">{{ seg.value }}</b>
+            <span class="bar-pct">{{ seg.pct }}%</span>
+          </button>
+        }
+      </div>
+      <span class="bar-hint">Cliquez sur une barre pour filtrer la liste</span>
+    </div>
+
+    <div class="card donut-card">
+      <div class="card-head">
+        <div>
+          <span class="eyebrow">Parts</span>
+          <h2>Part des rôles</h2>
+        </div>
+      </div>
+
+      <div class="donut-wrap" [class.pop]="donutPop">
+        <svg viewBox="0 0 120 120" class="donut-svg">
+          <circle cx="60" cy="60" r="42" class="donut-bg"/>
+          @for (seg of donutSegments; track seg.role) {
+            <circle
+              cx="60" cy="60" r="42"
+              class="donut-seg"
+              [class.active]="activeRole === seg.role"
+              [attr.stroke]="seg.color"
+              [attr.stroke-dasharray]="seg.dash + ' ' + seg.gap"
+              [attr.stroke-dashoffset]="seg.offset"
+              (click)="onSelectRole(seg.role)">
+              <animate attributeName="stroke-dasharray" [attr.from]="'0 ' + donutCircumference" [attr.to]="seg.dash + ' ' + seg.gap" dur="1.1s" fill="freeze" begin="0.2s"/>
+            </circle>
+          }
+        </svg>
+        <div class="donut-center">
+          @if (activeRole) {
+            <b style="color: {{ activeSegColor }}">{{ activeSegValue }}</b>
+            <span>{{ roleLabels[activeRole] }}</span>
+          } @else {
+            <b>{{ total }}</b>
+            <span>utilisateurs</span>
+          }
+        </div>
+      </div>
+
+      <ul class="donut-legend">
+        @for (seg of donutSegments; track seg.role) {
+          <li [class.active]="activeRole === seg.role" (click)="onSelectRole(seg.role)">
+            <i class="dot" [style.background]="seg.color"></i>
+            {{ roleLabels[seg.role] }}
+            <b>{{ seg.pct }}%</b>
+          </li>
+        }
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- ===== ANNULAIRE + FORMULAIRE ===== -->
+  <div class="content-grid">
+
+    <!-- Liste des utilisateurs -->
+    <section class="card table-card">
+      <div class="card-head">
+        <div>
+          <span class="eyebrow">Liste</span>
+          <h2>Liste des utilisateurs</h2>
+        </div>
+        <div class="search-shell">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Nom, email, téléphone, rôle…" [value]="searchTerm" (input)="onSearchInput($event)">
+        </div>
+      </div>
+
+      <div class="table-filters">
+        <button type="button" class="filter-chip" [class.active]="activeRoleFilter === 'all'" (click)="setRoleFilter('all')">Tous</button>
+        <button type="button" class="filter-chip" [class.active]="activeRoleFilter === 'admin'" (click)="setRoleFilter('admin')">Admin</button>
+        <button type="button" class="filter-chip" [class.active]="activeRoleFilter === 'agent'" (click)="setRoleFilter('agent')">Agent</button>
+        <button type="button" class="filter-chip" [class.active]="activeRoleFilter === 'chef_local'" (click)="setRoleFilter('chef_local')">Chef local</button>
+        <button type="button" class="filter-chip" [class.active]="activeRoleFilter === 'chef_region'" (click)="setRoleFilter('chef_region')">Chef région</button>
+        <span class="filter-divider"></span>
+        <button type="button" class="filter-chip" [class.active]="activeStatusFilter === 'all'" (click)="setStatusFilter('all')">Tous statuts</button>
+        <button type="button" class="filter-chip" [class.active]="activeStatusFilter === 'actif'" (click)="setStatusFilter('actif')">Actifs</button>
+        <button type="button" class="filter-chip" [class.active]="activeStatusFilter === 'inactif'" (click)="setStatusFilter('inactif')">Inactifs</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Utilisateur</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Rôle</th>
+              <th>Statut</th>
+              <th>Date création</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (displayedUsers.length === 0) {
+              <tr>
+                <td colspan="7" class="table-empty">Aucun utilisateur trouvé</td>
+              </tr>
+            } @else {
+              @for (user of displayedUsers; track user.id ?? user.email) {
+                <tr>
+                  <td>
+                    <span class="agent">
+                      <span class="agent-avatar">{{ getUserInitials(user) }}</span>
+                      <span class="cell-strong">{{ getUserFullName(user) }}</span>
+                    </span>
+                  </td>
+                  <td>{{ user.email || '—' }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>
+                    <span [class]="'role-badge ' + normalizeRole(user.role)">
+                      {{ getRoleLabel(user.role) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="status" [class.actif]="user.actif" [class.arret]="!user.actif">
+                      {{ user.actif ? 'Actif' : 'Inactif' }}
+                    </span>
+                  </td>
+                  <td class="cell-muted">{{ formatUserDate(user.dateCreation) }}</td>
+                  <td>
+                    <div class="row-actions">
+                      <button type="button" class="act-btn edit" title="Modifier" (click)="openEditUser(user)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>
+                      </button>
+                      <button type="button" class="act-btn del" title="Supprimer" (click)="deleteUser(user)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table-foot">
+        <span>{{ displayedUsers.length }} utilisateur{{ displayedUsers.length > 1 ? 's' : '' }} affiché{{ displayedUsers.length > 1 ? 's' : '' }}</span>
+      </div>
+    </section>
+
+    <!-- Ajout / modification d'un utilisateur -->
+    <section class="card form-card">
+      <div class="card-head">
+        <div>
+          <span class="eyebrow">{{ editingUser ? 'Modification' : 'Création' }}</span>
+          <h2>{{ editingUser ? 'Modifier l’utilisateur' : 'Ajouter un utilisateur' }}</h2>
+        </div>
+        @if (editingUser) {
+          <span class="role-badge {{ normalizeRole(editingUser.role) }}">
+            {{ getRoleLabel(editingUser.role) }}
+          </span>
+        }
+      </div>
+
+      @if (editingUser) {
+        <div class="editing-hint">
+          Modification en cours : <b>{{ getUserFullName(editingUser) }}</b>
+        </div>
+      }
+
+      @if (formMessage) {
+        <div class="form-msg success">{{ formMessage }}</div>
+      }
+      @if (formError) {
+        <div class="form-msg error">{{ formError }}</div>
+      }
+
+      <form (ngSubmit)="onSubmit()" novalidate>
+        <div class="field-row">
+          <label class="field">
+            <span>Nom</span>
+            <input type="text" name="nom" placeholder="Ben Salah" [(ngModel)]="formNom" required>
+          </label>
+          <label class="field">
+            <span>Prénom</span>
+            <input type="text" name="prenom" placeholder="Ahmed" [(ngModel)]="formPrenom" required>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" placeholder="ahmed@erap.tn" [(ngModel)]="formEmail" required>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span>{{ editingUser ? 'Mot de passe (laisser vide pour conserver)' : 'Mot de passe' }}</span>
+            <input type="password" name="password" placeholder="••••••••" [(ngModel)]="formPassword" [required]="!editingUser">
+          </label>
+          <label class="field">
+            <span>Téléphone</span>
+            <input type="number" name="phone" placeholder="22133445" [(ngModel)]="formPhone" required>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Rôle</span>
+          <select name="role" [(ngModel)]="formRole">
+            <option value="agent">Agent</option>
+            <option value="chef_local">Chef local</option>
+            <option value="chef_region">Chef de région</option>
+            <option value="admin">Administrateur</option>
+          </select>
+        </label>
+
+        <label class="toggle">
+          <input type="checkbox" name="actif" [(ngModel)]="formActif">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          <span>Compte actif</span>
+        </label>
+
+        <div class="form-actions">
+          @if (editingUser) {
+            <button type="button" class="btn-ghost" (click)="cancelEdit()">Annuler</button>
+          }
+          <button type="submit" class="btn-primary" [disabled]="submitting">
+            {{ submitting ? 'Enregistrement…' : (editingUser ? 'Enregistrer' : 'Créer l’utilisateur') }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="scene">
+  <div #tileGrid class="tile-grid" (mouseover)="onTileHover($event)"></div>
+  <div class="glow-orb one"></div>
+  <div class="glow-orb two"></div>
+
+  <div class="card">
+
+    <!-- CÔTÉ IDENTITÉ -->
+    <div class="brand">
+      <div class="noise"></div>
+
+      <div class="brand-top">
+        <div class="brand-logo-circle">
+          <img class="brand-logo" src="etap.png" alt="Logo ETAP">
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">ETAP</span>
+          <span class="brand-sub">Entreprise Tunisienne d'Activités Pétrolières</span>
+        </div>
+      </div>
+
+      <div class="pulse-block">
+        <svg class="pulse-svg" viewBox="0 0 300 52" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="pulse-path ghost" d="M0,30 L30,30 L38,14 L46,42 L54,20 L62,30 L90,30 L98,10 L106,44 L114,26 L120,30 L150,30 L158,16 L166,40 L174,22 L182,30 L210,30 L218,12 L226,42 L234,24 L240,30 L270,30 L278,18 L286,36 L294,30 L300,30"/>
+          <path class="pulse-path" d="M0,30 L30,30 L38,14 L46,42 L54,20 L62,30 L90,30 L98,10 L106,44 L114,26 L120,30 L150,30 L158,16 L166,40 L174,22 L182,30 L210,30 L218,12 L226,42 L234,24 L240,30 L270,30 L278,18 L286,36 L294,30 L300,30" stroke-dasharray="10 300" stroke-dashoffset="0">
+            <animate attributeName="stroke-dashoffset" from="0" to="-310" dur="3.2s" repeatCount="indefinite"/>
+          </path>
+          <circle class="pulse-marker" r="3">
+            <animateMotion dur="3.2s" repeatCount="indefinite" path="M0,30 L30,30 L38,14 L46,42 L54,20 L62,30 L90,30 L98,10 L106,44 L114,26 L120,30 L150,30 L158,16 L166,40 L174,22 L182,30 L210,30 L218,12 L226,42 L234,24 L240,30 L270,30 L278,18 L286,36 L294,30 L300,30"/>
+          </circle>
+        </svg>
+      </div>
+
+      <div>
+        <div class="depth-scale">
+          <div class="stat"><b>50+</b><span>Ans d'expertise</span></div>
+          <div class="stat"><b>24/7</b><span>Suivi des opérations</span></div>
+          <div class="stat"><b>100%</b><span>Accès sécurisé</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CÔTÉ FORMULAIRE -->
+    <div class="panel">
+      <div class="form-eyebrow">
+        <div class="rule"></div>
+        <span>Espace privé</span>
+      </div>
+
+      <h1>Connexion</h1>
+      <p class="lead">Entrez vos identifiants pour accéder à votre espace ETAP.</p>
+
+      <form autocomplete="off" (ngSubmit)="onSubmit($event)">
+        <div class="field">
+          <label for="email">Adresse e-mail</label>
+          <div class="input-shell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="nom@etap.com.tn"
+              required
+              [(ngModel)]="email"
+            >
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <div class="input-shell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              required
+              [(ngModel)]="password"
+            >
+            <button
+              type="button"
+              class="toggle-pw"
+              [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+              (click)="togglePasswordVisibility()"
+            >
+              <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.4 20.4 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a20.3 20.3 0 0 1-3.22 4.36"/>
+                <path d="M1 1l22 22"/>
+                <path d="M14.12 14.12A3 3 0 1 1 9.88 9.88"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="row-between">
+          <label class="remember">
+            <input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe">
+            Se souvenir de moi
+          </label>
+          <a href="#" class="forgot">Mot de passe oublié ?</a>
+        </div>
+
+        <button type="submit" class="submit">
+          Se connecter
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      
+      </form>
+
+      <div class="divider"><div class="line"></div><span>Besoin d'aide</span><div class="line"></div></div>
+
+      <p class="help-text">Problème de connexion ? <a href="#">Contactez le support ETAP</a></p>
+    </div>
+
+  </div>
+</div>
