@@ -1,6 +1,6 @@
 <div align="center">
 
-# ERAP
+# ETAP
 ### Gestion de Factures & Estimation de Consommation
 
 Plateforme web full-stack développée pour l'**ETAP** (Entreprise Tunisienne d'Activités Pétrolières)
